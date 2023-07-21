@@ -144,66 +144,66 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
 
     <h1 id="计算机系统基础lab-2"><a class="markdownIt-Anchor" href="#计算机系统基础lab-2">#</a> 计算机系统基础：lab 2</h1>
 <h2 id="binary-bomb"><a class="markdownIt-Anchor" href="#binary-bomb">#</a> Binary Bomb</h2>
-<p><strong>2.1 实验概述</strong></p>
+<h3 id="21-实验概述"><a class="markdownIt-Anchor" href="#21-实验概述">#</a> <strong>2.1 实验概述</strong></h3>
 <p>本实验需要使用课程所学知识拆除一个 “binary bombs” 来增强对程序的机器级表示、汇编语言、调试器和逆向工程等方面原理与技能的掌握。二进制炸弹 “binary bombs” 是一个 Linux 可执行 C 程序，包含了 6 个阶段（phase1~phase6）。炸弹运行的每个阶段要求输入一个特定的字符串，若输入符合程序预期则表示拆弹成功，否则输出爆炸信息。</p>
-<p><strong>2.2 实验内容</strong></p>
+<h3 id="22-实验内容"><a class="markdownIt-Anchor" href="#22-实验内容">#</a> <strong>2.2 实验内容</strong></h3>
 <p>本次实验的 6 个阶段主要涉及到字符串比较、循环、条件分支、递归调用和栈、指针、链表和结构体。此外，还有一个隐藏关卡涉及二叉树结构。从可执行程序 bomb 入手，将其反汇编并保存，通过分析汇编代码并结合 Linux 中的 gdb 调试获取内存信息逐个破解。</p>
-<p><strong>2.2.1 阶段 1</strong> <strong>phase1</strong></p>
+<h4 id="221-阶段1-phase1"><a class="markdownIt-Anchor" href="#221-阶段1-phase1">#</a> <strong>2.2.1 阶段 1</strong> <strong>phase1</strong></h4>
 <p>**1. 任务描述：** 输入一个字符串，需要与程序内部比较的字符串相等</p>
 <p>**2. 实验设计：** 在字符串比较函数调用时查看相关寄存器内存储的待比较内容</p>
 <p><strong>3. 实验过程</strong></p>
 <p>首先找到 phase_1 函数，观察到调用了字符串比较函数之前传入的一个参数是地址，说明要比较的内容存在地址 0x8049fc4 处。</p>
-<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img/wps1.jpg" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img1/wps1.jpg" alt="img"></p>
 <p>使用 gdb 调试程序，查看 0x8049fc4 处的内容如下：</p>
-<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img/wps2.jpg" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img1/wps2.jpg" alt="img"></p>
 <p>由于是小端存储的，得到 ASCII 序列为：48,65,20,90,73,20,65,67，…，00。将这些数据换为字符，得到字符串 “He is evil and fits easily into most overhead storage bins.”。</p>
 <p>4. 实验结果：结果为：“He is evil and fits easily into most overhead storage bins.”。运行程序并输入该字符串，phase1 拆弹成功。</p>
-<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img/wps3.jpg" alt="img"></p>
-<p><strong>2.2.2 阶段 2 phase2</strong></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img1/wps3.jpg" alt="img"></p>
+<h4 id="222-阶段2-phase2"><a class="markdownIt-Anchor" href="#222-阶段2-phase2">#</a> <strong>2.2.2 阶段 2 phase2</strong></h4>
 <p>**1. 任务描述：** 输入六个数字，满足程序的规则</p>
 <p>**2. 实验设计：** 分析汇编代码，找出推导关系表达式，并注意边界条件</p>
 <p><strong>3. 实验过程：</strong></p>
 <p>首先对 phase2 的汇编代码进行分析：</p>
-<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img/wps4.jpg" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img1/wps4.jpg" alt="img"></p>
 <p>程序对 esp 的操作实际上在开辟数组内存，数组 arr 起始地址为 esp+4。观察读取 6 个数字后的操作，首先判断 esp+4 和 0，如果为负数则爆炸，说明数组首个数不为负数。由 8048b9c 处的 jne 指令知程序中存在循环，具体过程为：将 ebx 初始化为 1，相当于是从 1 开始的循环计数器 i。每次循环时将 ebx 赋值给 eax，然后 eax 每次加上 arr [i]，比较 arr [i] 和 arr [i+1] 的值，不相等就爆炸。最后将 ebx 加 1，若达到最大循环次数 6 则退出。</p>
 <p>综上可知，输入的序列需要满足 arr [i+1]=arr [i]+i 且首个数字非负。</p>
 <p>**4. 实验结果：** 只要满足上述式子的序列即可，例如 1 2 4 7 11 16。输入并验证，如图所示，成功通过。</p>
-<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img/wps5.jpg" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img1/wps5.jpg" alt="img"></p>
 <p>改为起始为 0 且满足上述表达式的序列，结果如图，仍通过。</p>
-<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img/wps6.jpg" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img1/wps6.jpg" alt="img"></p>
 <p>改为起始为 - 1 且满足上述表达式的序列，结果如图，未通过，证明首个数字必须非负。</p>
-<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img/wps7.jpg" alt="img"></p>
-<p><strong>2.2.3 阶段 3 phase3</strong></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img1/wps7.jpg" alt="img"></p>
+<h4 id="223-阶段3-phase3"><a class="markdownIt-Anchor" href="#223-阶段3-phase3">#</a> <strong>2.2.3 阶段 3 phase3</strong></h4>
 <p>**1. 任务描述：** 输入两个整数，满足程序中的条件分支约束</p>
 <p>**2. 实验设计：** 分析出条件分支流程和输入参数要求，输入的两个数恰好能在分支完成后匹配。</p>
 <p><strong>3. 实验过程：</strong></p>
 <p>首先观察到汇编代码中有 push  $0x804a1af 的操作，查看该地址内存：</p>
-<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img/wps8.jpg" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img1/wps8.jpg" alt="img"></p>
 <p>发现内容原来是 % d % d，说明读入两个数是整数。</p>
 <p>代码中还有一条指令 jmp  *0x804a040 (,% eax,4)，调试查看内容。发现该地址指向地址 0x08048bfb，如图所示，正好对应代码中下一条指令的地址！</p>
-<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img/wps9.jpg" alt="img"></p>
-<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img/wps10.jpg" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img1/wps9.jpg" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img1/wps10.jpg" alt="img"></p>
 <p>然后根据分支跳转写出 eax 的变化，初始为 323（十进制），假设从分支起点开始执行，则 eax 依次变为 - 901、46、-642、46、-642、46、-642。最后判断第一个参数是否小于等于 5, 第二个参数是否等于 eax，若都成立则拆弹成功。</p>
 <p>注意到分支开始时有一个跳转地址为：第一个参数 * 4+0x08048bfb。这可能跳转到 eax 变化序列当中的任意一处。不妨设置为 0，作为第一个参数。则从初始值开始一路变化到最后一个值 - 642。因此得到一个答案：0 -642。</p>
-<p><em><strong>*4.*</strong></em>**** 实验结果：**** 一个结果为 0 -642。第一个参数也可以取 1、2、3、4、5，只是跳转的起始位置不同，计算方法是一样的。</p>
-<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img/wps11.jpg" alt="img"></p>
-<p><strong>2.2.4 阶段 4 phase4</strong></p>
+<p>**4. 实验结果：** 一个结果为 0 -642。第一个参数也可以取 1、2、3、4、5，只是跳转的起始位置不同，计算方法是一样的。</p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img1/wps11.jpg" alt="img"></p>
+<h4 id="224-阶段4-phase4"><a class="markdownIt-Anchor" href="#224-阶段4-phase4">#</a> <strong>2.2.4 阶段 4 phase4</strong></h4>
 <p>**1. 任务描述：** 输入两个数，满足程序在递归调用后的条件判断</p>
 <p>**2. 实验设计：** 分析递归函数的结构，然后任选一个简单的输入值，计算输出值</p>
 <p><strong>3. 实验过程：</strong></p>
 <p>分析 func4 汇编代码，设传入参数为 A 和 B。F (A,B) 含义为：若 B&lt;=0 则返回 0，若 B=1 则返回 A，否则返回 F (A,B-1)+F (A,B-2)。</p>
-<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img/wps12.jpg" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img1/wps12.jpg" alt="img"></p>
 <p>从 phase4 函数中可以获得约束：第二个参数 &lt;=4，假设为 2。调用 F (参数二，6) 进入递归式，最终返回值要与第一个参数相等推算出第一个参数应为 40。</p>
 <p>另一种方法是先随便输入两个数，假设为 100 和 2。然后根据第一个参数的比较位置 0x8048d1c，在 phase_4 函数设置断点单步调试至这一步，查看寄存器 eax 的值为 40，即答案为 40，2。</p>
-<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img/wps13.jpg" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img1/wps13.jpg" alt="img"></p>
 <p>**4. 实验结果：** 一个结果为 40 2。验证如图 2.14 所示，通过。（DrEvil 仅为隐藏关开启条件，与 phase4 答案无关）</p>
-<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img/wps14.jpg" alt="img"></p>
-<p><strong>2.2.5 阶段 5 phase5</strong></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img1/wps14.jpg" alt="img"></p>
+<h4 id="225-阶段5-phase5"><a class="markdownIt-Anchor" href="#225-阶段5-phase5">#</a> <strong>2.2.5 阶段 5 phase5</strong></h4>
 <p>**1. 任务描述：** 输入一个字符串，其 ASCII 末位的值代表一个偏移，根据偏移寻找内存中相应的值，要求和为程序指定常数</p>
 <p>**2. 实验设计：** 先确定内存中的数据，再根据偏移量凑出六个数并且指向的数字和为常数 61</p>
 <p><strong>3. 实验过程：</strong></p>
 <p>观察 string_length 函数知输入长度要为 6。接下来有一个循环，作用是将输入字符串的每一个字符 ASCII 码的后四位二进制数作为偏移量，从内存中的数组中取出相应的数，相加要为 61。</p>
-<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img/wps15.jpg" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img1/wps15.jpg" alt="img"></p>
 <p>查看 0x804a060 处的数组，内容如图所示。</p>
 <p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img/wps16.jpg" alt="img"></p>
 <p>由此可得偏移和数值之间的关系，见表 2.1。观察知 12+12+12+12+12+1=60，因此可以取偏移为 16 的数 5 次，偏移为 12 的数 1 次，换成字符串表示为 dddddc。</p>
@@ -266,7 +266,7 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
 </table>
 <p>**4. 实验结果：** 答案为 “dddddc”。验证结果如图所示，通过。</p>
 <p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img/wps17.jpg" alt="img"></p>
-<p><strong>2.2.6 阶段 6 phase6</strong></p>
+<h4 id="226-阶段6-phase6"><a class="markdownIt-Anchor" href="#226-阶段6-phase6">#</a> <strong>2.2.6 阶段 6 phase6</strong></h4>
 <p>**1. 任务描述：** 输入六个数字代表次序，使得内存中的数按照该次序是从小到大的</p>
 <p>**2. 实验设计：** 通过调试查看内存中的数据，分析循环得出期望效果</p>
 <p><strong>3. 实验过程：</strong></p>
@@ -281,32 +281,20 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
 <p>由此可得数组的值依次为 157、474、256、696、748。但是这里只有五个数，剩下的一个是特殊处理的。注意到有一条指令将地址 0x804c13c 处的值插入到 arr [1]。根据该地址进行调试，查看到其值为 88。因此最终的数组序列为 157、88、474、256、696、748。从小到大排序的映射为 2、1、4、3、5、6。</p>
 <p>**4. 实验结果：** 答案为 2、1、4、3、5、6，验证通过。</p>
 <p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img/wps22.jpg" alt="img"></p>
-<p><strong>2.2.7 阶段 7 phase7</strong></p>
+<h4 id="227-阶段7-phase7"><a class="markdownIt-Anchor" href="#227-阶段7-phase7">#</a> <strong>2.2.7 阶段 7 phase7</strong></h4>
 <p>**1. 任务描述：** 根据二叉树结构和运算规则写出要达到指定返回值所对应的输入。</p>
 <p>**2. 实验设计：** 使用调试工具查看相应地址的内存，建立二叉树结构，然后根据要返回的结果逆向推理。</p>
 <p><strong>3. 实验过程：</strong></p>
 <p>首先查看内存 0x804c088 处的二叉树内存结构：</p>
 <p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img/wps23.jpg" alt="img"></p>
 <p>可以得出其结构为：</p>
-<pre><code class="language-c++">struct Node&#123;
-	int val;
- 	Node* p1;
-  	Node* p2;
-&#125;;
-</code></pre>
-<p>画出该树的结构如图所示（16 进制表示）：</p>
+<figure class="highlight cpp"><figcaption data-lang="C++"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">struct</span> <span class="token class-name">Node</span><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="2"></td><td><pre>	<span class="token keyword">int</span> val<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="3"></td><td><pre> 	Node<span class="token operator">*</span> p1<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="4"></td><td><pre>  	Node<span class="token operator">*</span> p2<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token punctuation">&#125;</span><span class="token punctuation">;</span></pre></td></tr></table></figure><p>画出该树的结构如图所示（16 进制表示）：</p>
 <p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img/wps24.png" alt="img"></p>
 <p>如果参数值等于当前值，则返回 0；如果参数值大于当前值，则乘 2+1；如果参数值小于当前值，则乘 2。</p>
 <p>利用代码可形象地表示为：</p>
-<pre><code class="language-c++">int func7(Node* p,int num)&#123;
-  if(p-&gt;val==num) return 0;
-  else if(p-&gt;val&gt;num) return 2*func7(p-&gt;p1,num);
-  else return 2*func7(p-&gt;p2,num)+1;
-&#125;
-</code></pre>
-<p>最后程序要求返回值为 1，逆向推到可得一个答案是 40。因为 40&gt;36, 向右子树递归，而右子树的值正好为 40，返回 0，因此最终返回 2*0+1=1。</p>
+<figure class="highlight cpp"><figcaption data-lang="C++"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">int</span> <span class="token function">func7</span><span class="token punctuation">(</span>Node<span class="token operator">*</span> p<span class="token punctuation">,</span><span class="token keyword">int</span> num<span class="token punctuation">)</span><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="2"></td><td><pre>  <span class="token keyword">if</span><span class="token punctuation">(</span>p<span class="token operator">-></span>val<span class="token operator">==</span>num<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="3"></td><td><pre>  <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>p<span class="token operator">-></span>val<span class="token operator">></span>num<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">2</span><span class="token operator">*</span><span class="token function">func7</span><span class="token punctuation">(</span>p<span class="token operator">-></span>p1<span class="token punctuation">,</span>num<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="4"></td><td><pre>  <span class="token keyword">else</span> <span class="token keyword">return</span> <span class="token number">2</span><span class="token operator">*</span><span class="token function">func7</span><span class="token punctuation">(</span>p<span class="token operator">-></span>p2<span class="token punctuation">,</span>num<span class="token punctuation">)</span><span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>最后程序要求返回值为 1，逆向推到可得一个答案是 40。因为 40&gt;36, 向右子树递归，而右子树的值正好为 40，返回 0，因此最终返回 2*0+1=1。</p>
 <p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img/wps25.jpg" alt="img"></p>
-<p>4. 实验结果：一个合理的答案为 40。将隐藏关与之前关卡一起测试，全部通过。</p>
+<p>**4. 实验结果：** 一个合理的答案为 40。将隐藏关与之前关卡一起测试，全部通过。</p>
 <p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img/wps26.jpg" alt="img"></p>
 <p><strong>完结撒花～～～</strong></p>
 
@@ -320,7 +308,7 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">更新于</span>
-    <time title="修改时间：2023-07-21 15:03:19" itemprop="dateModified" datetime="2023-07-21T15:03:19+08:00">2023-07-21</time>
+    <time title="修改时间：2023-07-21 15:36:36" itemprop="dateModified" datetime="2023-07-21T15:36:36+08:00">2023-07-21</time>
   </span>
 </div>
 
@@ -360,6 +348,14 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
 
     </div>
     <div class="item right">
+      
+
+  <a href="/2023/05/22/CSAPP_lab3/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;dodobird-blog.oss-cn-shanghai.aliyuncs.com&#x2F;v2-2d757602df79fb323c615c85298e25b3_r.jpg" title="计算机系统基础lab3">
+  <span class="type">下一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>计算机系统基础lab3</h3>
+  </a>
+
     </div>
 </div>
 
@@ -376,7 +372,7 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
   <div class="panels">
     <div class="inner">
       <div class="contents panel pjax" data-title="文章目录">
-          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80lab-2"><span class="toc-number">1.</span> <span class="toc-text"> 计算机系统基础：lab 2</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#binary-bomb"><span class="toc-number">1.1.</span> <span class="toc-text"> Binary Bomb</span></a></li></ol></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80lab-2"><span class="toc-number">1.</span> <span class="toc-text"> 计算机系统基础：lab 2</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#binary-bomb"><span class="toc-number">1.1.</span> <span class="toc-text"> Binary Bomb</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#21-%E5%AE%9E%E9%AA%8C%E6%A6%82%E8%BF%B0"><span class="toc-number">1.1.1.</span> <span class="toc-text"> 2.1 实验概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#22-%E5%AE%9E%E9%AA%8C%E5%86%85%E5%AE%B9"><span class="toc-number">1.1.2.</span> <span class="toc-text"> 2.2 实验内容</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#221-%E9%98%B6%E6%AE%B51-phase1"><span class="toc-number">1.1.2.1.</span> <span class="toc-text"> 2.2.1 阶段 1 phase1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#222-%E9%98%B6%E6%AE%B52-phase2"><span class="toc-number">1.1.2.2.</span> <span class="toc-text"> 2.2.2 阶段 2 phase2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#223-%E9%98%B6%E6%AE%B53-phase3"><span class="toc-number">1.1.2.3.</span> <span class="toc-text"> 2.2.3 阶段 3 phase3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#224-%E9%98%B6%E6%AE%B54-phase4"><span class="toc-number">1.1.2.4.</span> <span class="toc-text"> 2.2.4 阶段 4 phase4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#225-%E9%98%B6%E6%AE%B55-phase5"><span class="toc-number">1.1.2.5.</span> <span class="toc-text"> 2.2.5 阶段 5 phase5</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#226-%E9%98%B6%E6%AE%B56-phase6"><span class="toc-number">1.1.2.6.</span> <span class="toc-text"> 2.2.6 阶段 6 phase6</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#227-%E9%98%B6%E6%AE%B57-phase7"><span class="toc-number">1.1.2.7.</span> <span class="toc-text"> 2.2.7 阶段 7 phase7</span></a></li></ol></li></ol></li></ol></li></ol>
       </div>
       <div class="related panel pjax" data-title="系列文章">
       </div>
@@ -391,7 +387,7 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
 <nav class="state">
     <div class="item posts">
       <a href="/archives/">
-        <span class="count">5</span>
+        <span class="count">6</span>
         <span class="name">文章</span>
       </a>
     </div>
@@ -441,10 +437,12 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
 
   <ul id="quick">
     <li class="prev pjax">
+        <a href="/2023/05/12/CSAPP_lab1/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a>
     </li>
     <li class="up"><i class="ic i-arrow-up"></i></li>
     <li class="down"><i class="ic i-arrow-down"></i></li>
     <li class="next pjax">
+        <a href="/2023/05/22/CSAPP_lab3/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a>
     </li>
     <li class="percent"></li>
   </ul>
@@ -468,7 +466,7 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2023/05/17/CSAPP_lab2/" title="计算机系统基础lab2">计算机系统基础lab2</a></span>
+    <span><a href="/2023/05/11/treearray/" title="算法实践-树状数组">算法实践-树状数组</a></span>
   </li>
 
       
@@ -477,7 +475,7 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2023/05/12/CSAPP_lab1/" title="计算机系统基础lab1">计算机系统基础lab1</a></span>
+    <span><a href="/2023/05/22/CSAPP_lab3/" title="计算机系统基础lab3">计算机系统基础lab3</a></span>
   </li>
 
       
@@ -495,7 +493,7 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2023/05/11/treearray/" title="算法实践-树状数组">算法实践-树状数组</a></span>
+    <span><a href="/2023/04/22/hello-world/" title="Hello World">Hello World</a></span>
   </li>
 
       
@@ -504,7 +502,16 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2023/04/22/hello-world/" title="Hello World">Hello World</a></span>
+    <span><a href="/2023/05/12/CSAPP_lab1/" title="计算机系统基础lab1">计算机系统基础lab1</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/05/17/CSAPP_lab2/" title="计算机系统基础lab2">计算机系统基础lab2</a></span>
   </li>
 
   </ul>
