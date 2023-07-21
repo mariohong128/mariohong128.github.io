@@ -25,12 +25,12 @@
 
   
 
-<link rel="canonical" href="http://dodobird.top/2023/05/24/hello-world/">
+<link rel="canonical" href="http://dodobird.top/2023/04/22/CSAPP_lab1/">
 
 
 
   <title>
-Hello World |
+Code Highlight Style test |
 DodoBird's Blog = 呆呆鸟のBlog</title>
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -58,16 +58,16 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
         <div id="brand">
           <div class="pjax">
           
-  <h1 itemprop="name headline">Hello World
+  <h1 itemprop="name headline">Code Highlight Style test
   </h1>
   
 <div class="meta">
-  <span class="item" title="创建时间：2023-05-24 14:48:43">
+  <span class="item" title="创建时间：2023-04-22 23:03:30">
     <span class="icon">
       <i class="ic i-calendar"></i>
     </span>
     <span class="text">发表于</span>
-    <time itemprop="dateCreated datePublished" datetime="2023-05-24T14:48:43+08:00">2023-05-24</time>
+    <time itemprop="dateCreated datePublished" datetime="2023-04-22T23:03:30+08:00">2023-04-22</time>
   </span>
 </div>
 
@@ -99,7 +99,7 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
 
       </div>
       <div id="imgs" class="pjax">
-          <img src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/2055991.jpg">
+          <img src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/v2-2d757602df79fb323c615c85298e25b3_r.jpg">
       </div>
     </header>
     <div id="waves">
@@ -127,7 +127,7 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
 </div>
 
     <article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN">
-  <link itemprop="mainEntityOfPage" href="http://dodobird.top/2023/05/24/hello-world/">
+  <link itemprop="mainEntityOfPage" href="http://dodobird.top/2023/04/22/CSAPP_lab1/">
 
   <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="image" content="/images/avatar.jpg">
@@ -142,18 +142,187 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
   <div class="body md" itemprop="articleBody">
     
 
-    <p>梦开始的地方～～</p>
-<hr>
-<p>Welcome to <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvLw==">Hexo</span>! This is your very first post. Check <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3Mv">documentation</span> for more info. If you get any problems when using Hexo, you can find the answer in <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3MvdHJvdWJsZXNob290aW5nLmh0bWw=">troubleshooting</span> or you can ask me on <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2hleG9qcy9oZXhvL2lzc3Vlcw==">GitHub</span>.</p>
-<h2 id="quick-start"><a class="markdownIt-Anchor" href="#quick-start">#</a> Quick Start</h2>
-<h3 id="create-a-new-post"><a class="markdownIt-Anchor" href="#create-a-new-post">#</a> Create a new post</h3>
-<figure class="highlight bash"><figcaption data-lang="bash"><span>h</span></figcaption><table><tr><td data-num="1"></td><td><pre>$ hexo new <span class="token string">"My New Post"</span></pre></td></tr></table></figure><p>More info: <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3Mvd3JpdGluZy5odG1s">Writing</span></p>
-<h3 id="run-server"><a class="markdownIt-Anchor" href="#run-server">#</a> Run server</h3>
-<figure class="highlight bash"><figcaption data-lang="bash"><span>h</span></figcaption><table><tr><td data-num="1"></td><td><pre>$ hexo server</pre></td></tr></table></figure><p>More info: <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3Mvc2VydmVyLmh0bWw=">Server</span></p>
-<h3 id="generate-static-files"><a class="markdownIt-Anchor" href="#generate-static-files">#</a> Generate static files</h3>
-<figure class="highlight bash"><figcaption data-lang="bash"><span>h</span></figcaption><table><tr><td data-num="1"></td><td><pre>$ hexo generate</pre></td></tr></table></figure><p>More info: <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3MvZ2VuZXJhdGluZy5odG1s">Generating</span></p>
-<h3 id="deploy-to-remote-sites"><a class="markdownIt-Anchor" href="#deploy-to-remote-sites">#</a> Deploy to remote sites</h3>
-<figure class="highlight bash"><figcaption data-lang="bash"><span>h</span></figcaption><table><tr><td data-num="1"></td><td><pre>$ hexo deploy</pre></td></tr></table></figure><p>More info: <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3Mvb25lLWNvbW1hbmQtZGVwbG95bWVudC5odG1s">Deployment</span></p>
+    <h2 id="计算机系统基础lab-1"><a class="markdownIt-Anchor" href="#计算机系统基础lab-1">#</a> 计算机系统基础：lab 1</h2>
+<pre><code class="language-C">/* 
+ *   lsbZero - set 0 to the least significant bit of x 
+ *   Example: lsbZero(0x87654321) = 0x87654320
+ *   Legal ops: ! ~ &amp; ^ | + &lt;&lt; &gt;&gt;
+ *   Max ops: 5
+ *   Rating: 1
+ */
+int lsbZero(int x) &#123;
+  return x&gt;&gt;1&lt;&lt;1;//右移再左移,最后一位补0
+&#125;
+/* 
+ * byteNot - bit-inversion to byte n from word x  
+ *   Bytes numbered from 0 (LSB) to 3 (MSB)
+ *   Examples: getByteNot(0x12345678,1) = 0x1234A978
+ *   Legal ops: ! ~ &amp; ^ | + &lt;&lt; &gt;&gt;
+ *   Max ops: 6
+ *   Rating: 2
+ */
+int byteNot(int x, int n) &#123;
+  //n&lt;&lt;3=乘8,让0xff移位后对应字节为1,其余为0,异或取反
+  return x^(0xff&lt;&lt;(n&lt;&lt;3));
+&#125;
+/* 
+ *   byteXor - compare the nth byte of x and y, if it is same, return 0, if not, return 1
+
+ *   example: byteXor(0x12345678, 0x87654321, 1) = 1
+
+ *			  byteXor(0x12345678, 0x87344321, 2) = 0
+ *   Legal ops: ! ~ &amp; ^ | + &lt;&lt; &gt;&gt;
+ *   Max ops: 20
+ *   Rating: 2 
+ */
+int byteXor(int x, int y, int n) &#123;
+  return !!((x^y)&amp;(0xff&lt;&lt;(n&lt;&lt;3)));
+&#125;
+/* 
+ *   logicalAnd - x &amp;&amp; y
+ *   Legal ops: ! ~ &amp; ^ | + &lt;&lt; &gt;&gt;
+ *   Max ops: 20
+ *   Rating: 3 
+ */
+int logicalAnd(int x, int y) &#123;
+  return (!!x)&amp;(!!y);//使用!!获得0和1
+&#125;
+/* 
+ *   logicalOr - x || y
+ *   Legal ops: ! ~ &amp; ^ | + &lt;&lt; &gt;&gt;
+ *   Max ops: 20
+ *   Rating: 3 
+ */
+int logicalOr(int x, int y) &#123;
+  return (!!x)|(!!y);
+&#125;
+/* 
+ * rotateLeft - Rotate x to the left by n
+ *   Can assume that 0 &lt;= n &lt;= 31
+ *   Examples: rotateLeft(0x87654321,4) = 0x76543218
+ *   Legal ops: ~ &amp; ^ | + &lt;&lt; &gt;&gt; !
+ *   Max ops: 25
+ *   Rating: 3 
+ */
+int rotateLeft(int x, int n) &#123;
+  return (x&lt;&lt;n)|((~((~0)&lt;&lt;n))&amp;(x&gt;&gt;(32+(~n+1))));//将x左移n位和x右移32-n位通过或运算拼接
+&#125;
+/*
+ * parityCheck - returns 1 if x contains an odd number of 1's
+ *   Examples: parityCheck(5) = 0, parityCheck(7) = 1
+ *   Legal ops: ! ~ &amp; ^ | + &lt;&lt; &gt;&gt;
+ *   Max ops: 20
+ *   Rating: 4
+ */
+int parityCheck(int x) &#123;
+  x=(x&gt;&gt;16)^x;//中间折叠,对称位都为1则异或后为0
+  x=(x&gt;&gt;8)^x;//再次折叠
+  x=(x&gt;&gt;4)^x;
+  x=(x&gt;&gt;2)^x;
+  x=(x&gt;&gt;1)^x;
+  return x&amp;1;//剩余的最后一位是否为1
+&#125;
+/*
+ * mul2OK - Determine if can compute 2*x without overflow
+ *   Examples: mul2OK(0x30000000) = 1
+ *             mul2OK(0x40000000) = 0
+ *         
+ *   Legal ops: ~ &amp; ^ | + &lt;&lt; &gt;&gt;
+ *   Max ops: 20
+ *   Rating: 2
+ */
+int mul2OK(int x) &#123;
+  return 1^((1&amp;(x&gt;&gt;31))^(1&amp;(x&gt;&gt;30)));//取出x第一位和第二位判断
+&#125;
+/*
+ * mult3div2 - multiplies by 3/2 rounding toward 0,
+ *   Should exactly duplicate effect of C expression (x*3/2),
+ *   including overflow behavior.
+ *   Examples: mult3div2(11) = 16
+ *             mult3div2(-9) = -13
+ *             mult3div2(1073741824) = -536870912(overflow)
+ *   Legal ops: ! ~ &amp; ^ | + &lt;&lt; &gt;&gt;
+ *   Max ops: 12
+ *   Rating: 2
+ */
+int mult3div2(int x) &#123;
+  x=(x&lt;&lt;1)+x;
+  x=x+(1&amp;(x&gt;&gt;31));//负数+2*2-1
+  return x&gt;&gt;1;
+&#125;
+/* 
+ * subOK - Determine if can compute x-y without overflow
+ *   Example: subOK(0x80000000,0x80000000) = 1,
+ *            subOK(0x80000000,0x70000000) = 0, 
+ *   Legal ops: ! ~ &amp; ^ | + &lt;&lt; &gt;&gt;
+ *   Max ops: 20
+ *   Rating: 3
+ */
+int subOK(int x, int y) &#123;
+  int r=x+(~y+1);
+  int a=(x&gt;&gt;31)&amp;1;
+  int b=(y&gt;&gt;31)&amp;1;
+  int c=(r&gt;&gt;31)&amp;1;
+  return !((a^b)&amp;(a^c));//正数减负数结果为负 或者 负数减正数结果为正
+&#125;
+/* 
+ * absVal - absolute value of x
+ *   Example: absVal(-1) = 1.
+ *   You may assume -TMax &lt;= x &lt;= TMax
+ *   Legal ops: ! ~ &amp; ^ | + &lt;&lt; &gt;&gt;
+ *   Max ops: 10
+ *   Rating: 4
+ */
+int absVal(int x) &#123;
+  int s=(x&gt;&gt;31);//取符号位
+  return (x^s)+!!s;//正数不变,负数取反+1
+&#125;
+/* 
+ * float_abs - Return bit-level equivalent of absolute value of f for
+ *   floating point argument f.
+ *   Both the argument and result are passed as unsigned int's, but
+ *   they are to be interpreted as the bit-level representations of
+ *   single-precision floating point values.
+ *   When argument is NaN, return argument..
+ *   Legal ops: Any integer/unsigned operations incl. ||, &amp;&amp;. also if, while
+ *   Max ops: 10
+ *   Rating: 2
+ */
+unsigned float_abs(unsigned uf) &#123;
+  int s=uf&amp;0x7fffffff;//去掉符号位
+  if(s&gt;0x7f800000)//阶码为1,尾数不为0,NAN
+    return uf;
+  return s;
+&#125;
+/* 
+ * float_f2i - Return bit-level equivalent of expression (int) f
+ *   for floating point argument f.
+ *   Argument is passed as unsigned int, but
+ *   it is to be interpreted as the bit-level representation of a
+ *   single-precision floating point value.
+ *   Anything out of range (including NaN and infinity) should return
+ *   0x80000000u.
+ *   Legal ops: Any integer/unsigned operations incl. ||, &amp;&amp;. also if, while
+ *   Max ops: 30
+ *   Rating: 4
+ */
+int float_f2i(unsigned uf) &#123;
+  int e=((uf&amp;0x7f800000)&gt;&gt;23)-127;//阶码
+  int m=(uf&amp;0x007fffff)|0x00800000;//尾数
+  if((e&gt;31)||((uf&amp;(0x7fffffff))&gt;0x7f800000))
+    return 0x80000000u;
+  if(e&lt;0)//小于1直接返回0
+    return 0u;
+  if((uf&gt;&gt;31)&amp;1)&#123;//负数要取反再加1
+    if(e&gt;23) return (~(m&lt;&lt;(e-23)))+1;
+    else return (~(m&gt;&gt;(23-e)))+1;
+  &#125;else&#123;//正数
+    if(e&gt;23) return m&lt;&lt;(e-23);
+    else return m&gt;&gt;(23-e);
+  &#125;
+&#125;
+
+</code></pre>
 
   </div>
 
@@ -165,7 +334,7 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">更新于</span>
-    <time title="修改时间：2023-05-25 10:49:01" itemprop="dateModified" datetime="2023-05-25T10:49:01+08:00">2023-05-25</time>
+    <time title="修改时间：2023-07-21 14:21:16" itemprop="dateModified" datetime="2023-07-21T14:21:16+08:00">2023-07-21</time>
   </span>
 </div>
 
@@ -178,7 +347,7 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
   </li>
   <li class="link">
     <strong>本文链接：</strong>
-    <a href="http://dodobird.top/2023/05/24/hello-world/" title="Hello World">http://dodobird.top/2023/05/24/hello-world/</a>
+    <a href="http://dodobird.top/2023/04/22/CSAPP_lab1/" title="Code Highlight Style test">http://dodobird.top/2023/04/22/CSAPP_lab1/</a>
   </li>
   <li class="license">
     <strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！
@@ -197,17 +366,17 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
     <div class="item left">
       
 
-  <a href="/2023/05/11/treearray/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;dodobird-blog.oss-cn-shanghai.aliyuncs.com&#x2F;v2-6741d9e80a0854e8c99e3fc8ab62e16d_r.jpg" title="算法实践-树状数组">
+  <a href="/2023/04/22/hello-world/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;dodobird-blog.oss-cn-shanghai.aliyuncs.com&#x2F;2055991.jpg" title="Hello World">
   <span class="type">上一篇</span>
   <span class="category"><i class="ic i-flag"></i> </span>
-  <h3>算法实践-树状数组</h3>
+  <h3>Hello World</h3>
   </a>
 
     </div>
     <div class="item right">
       
 
-  <a href="/2023/05/25/code-highlight/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;dodobird-blog.oss-cn-shanghai.aliyuncs.com&#x2F;2056632.jpg" title="Code Highlight Style test">
+  <a href="/2023/04/22/code-highlight/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;dodobird-blog.oss-cn-shanghai.aliyuncs.com&#x2F;2056632.jpg" title="Code Highlight Style test">
   <span class="type">下一篇</span>
   <span class="category"><i class="ic i-flag"></i> </span>
   <h3>Code Highlight Style test</h3>
@@ -229,7 +398,7 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
   <div class="panels">
     <div class="inner">
       <div class="contents panel pjax" data-title="文章目录">
-          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#quick-start"><span class="toc-number">1.</span> <span class="toc-text"> Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#create-a-new-post"><span class="toc-number">1.1.</span> <span class="toc-text"> Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#run-server"><span class="toc-number">1.2.</span> <span class="toc-text"> Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#generate-static-files"><span class="toc-number">1.3.</span> <span class="toc-text"> Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#deploy-to-remote-sites"><span class="toc-number">1.4.</span> <span class="toc-text"> Deploy to remote sites</span></a></li></ol></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80lab-1"><span class="toc-number">1.</span> <span class="toc-text"> 计算机系统基础：lab 1</span></a></li></ol>
       </div>
       <div class="related panel pjax" data-title="系列文章">
       </div>
@@ -244,7 +413,7 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
 <nav class="state">
     <div class="item posts">
       <a href="/archives/">
-        <span class="count">3</span>
+        <span class="count">4</span>
         <span class="name">文章</span>
       </a>
     </div>
@@ -294,12 +463,12 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
 
   <ul id="quick">
     <li class="prev pjax">
-        <a href="/2023/05/11/treearray/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a>
+        <a href="/2023/04/22/hello-world/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a>
     </li>
     <li class="up"><i class="ic i-arrow-up"></i></li>
     <li class="down"><i class="ic i-arrow-down"></i></li>
     <li class="next pjax">
-        <a href="/2023/05/25/code-highlight/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a>
+        <a href="/2023/04/22/code-highlight/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a>
     </li>
     <li class="percent"></li>
   </ul>
@@ -323,7 +492,7 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2023/05/24/hello-world/" title="Hello World">Hello World</a></span>
+    <span><a href="/2023/04/22/hello-world/" title="Hello World">Hello World</a></span>
   </li>
 
       
@@ -332,7 +501,7 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2023/05/25/code-highlight/" title="Code Highlight Style test">Code Highlight Style test</a></span>
+    <span><a href="/2023/04/22/CSAPP_lab1/" title="Code Highlight Style test">Code Highlight Style test</a></span>
   </li>
 
       
@@ -342,6 +511,15 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
 </div>
 
     <span><a href="/2023/05/11/treearray/" title="算法实践-树状数组">算法实践-树状数组</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/04/22/code-highlight/" title="Code Highlight Style test">Code Highlight Style test</a></span>
   </li>
 
   </ul>
@@ -372,7 +550,7 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
   </div>
 <script data-config type="text/javascript">
   var LOCAL = {
-    path: '2023/05/24/hello-world/',
+    path: '2023/04/22/CSAPP_lab1/',
     favicon: {
       show: "（●´3｀●）やれやれだぜ",
       hide: "(´Д｀)大変だ！"
