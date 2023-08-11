@@ -241,7 +241,7 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
 <p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/27.png" alt=""></p>
 <p>解决方法：尝试从另一个文件中获取同名文件看看能不能用，能通过但是最后有一个其它地方报错了，说明不仅仅是缺少这一个头文件的问题，应该是之前的安装有些疏忽。换了 miniforge 环境，重复一遍 buddy-mlir 的安装，再走一遍，头文件就能找到了。</p>
 <p>头文件解决后，ninja 时又出现如下报错：</p>
-<p>!!<span class="exturl" data-url="aHR0cHM6Ly9kb2RvYmlyZC1ibG9nLm9zcy1jbi1zaGFuZ2hhaS5hbGl5dW5jcy5jb20vaW1nMy8zMC5wbmc="></span></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/30.png" alt=""></p>
 <p>解决方法：尝试过重装 chipyard、buddy-mlir、自行配置 llvm 均无效，最后在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2J1ZGR5LWNvbXBpbGVyL2J1ZGR5LWJlbmNobWFyay9pc3N1ZXMvNDg="> issue</span> 中找到方案。需要安装 git lfs，保证 ResNet-101 被成功 clone，具体代码如下：</p>
 <figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">curl</span> <span class="token parameter variable">-s</span> https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">bash</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> git-lfs</pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token function">git</span> lfs <span class="token function">install</span></pre></td></tr></table></figure><p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/31.png" alt=""></p>
 <p>重新 clone 一下 buddy-benchmark，发现这次可以运行了</p>
@@ -490,7 +490,7 @@ func.func @main() -&gt; i64 &#123;
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">更新于</span>
-    <time title="修改时间：2023-08-11 15:19:38" itemprop="dateModified" datetime="2023-08-11T15:19:38+08:00">2023-08-11</time>
+    <time title="修改时间：2023-08-11 15:22:29" itemprop="dateModified" datetime="2023-08-11T15:22:29+08:00">2023-08-11</time>
   </span>
 </div>
 
@@ -638,25 +638,16 @@ func.func @main() -&gt; i64 &#123;
 <div class="breadcrumb">
 </div>
 
+    <span><a href="/2023/05/17/CSAPP_lab2/" title="计算机系统基础lab2">计算机系统基础lab2</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
     <span><a href="/2023/04/22/hello-world/" title="Hello World">Hello World</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2023/05/22/CSAPP_lab3/" title="计算机系统基础lab3">计算机系统基础lab3</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2023/05/11/treearray/" title="算法实践-树状数组">算法实践-树状数组</a></span>
   </li>
 
       
@@ -674,7 +665,7 @@ func.func @main() -&gt; i64 &#123;
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2023/05/17/CSAPP_lab2/" title="计算机系统基础lab2">计算机系统基础lab2</a></span>
+    <span><a href="/2023/05/22/CSAPP_lab3/" title="计算机系统基础lab3">计算机系统基础lab3</a></span>
   </li>
 
       
@@ -684,6 +675,15 @@ func.func @main() -&gt; i64 &#123;
 </div>
 
     <span><a href="/2023/08/05/gemmini_mlir/" title="gemmini与mlir环境搭建与架构认识">gemmini与mlir环境搭建与架构认识</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/05/11/treearray/" title="算法实践-树状数组">算法实践-树状数组</a></span>
   </li>
 
   </ul>
