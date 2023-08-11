@@ -147,66 +147,65 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
 <h3 id="1配置chipyard环境"><a class="markdownIt-Anchor" href="#1配置chipyard环境">#</a> <strong>1. 配置 Chipyard 环境：</strong></h3>
 <p>根据<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3VjYi1iYXIvZ2VtbWluaQ==">安装提示</span>，必须在 linux 中进行。第一次没注意，使用 windows 结果卡在 “Collecting package metadata”。</p>
 <p>由于 conda 和 git 之前已经安装过，现在只要安装 conda-lock。执行 “./build-setup.sh riscv-tools” 指令后会有漫长的等待。</p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=OGRjOGU3ZGMyNmIzOTllZDY3Y2IzMWI3YjFjMzc5ZDFfdEVXM1E1dVlzRHZFZTcwdHRhOHAzRlpKZzJJOEpxMFBfVG9rZW46SDBncWI3Z0E2b0R3aHN4QXVlSGNUeWVubmZnXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/1%E6%BC%AB%E9%95%BF%E7%AD%89%E5%BE%85.png" alt=""></p>
 <p>中途虚拟机内存不足了，不得不再来一次。直接在 VMware 设置扩容是不够的，还要在虚拟机中设置文件分区大小。</p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=Yjc5NzNmY2RlYTU2MTE0YTRiOTEzOTM3ODVjMzU5OGJfZ0IzSHNDVFZCWDRGWjV1U2xXWjAzR3dHYmxuS0pwbjNfVG9rZW46VHQzM2JTbEVob2p3UmV4T2JoWWNvcjc1bkZiXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
 <p><strong>报错：./build-setup.sh riscv-tools 运行时报错重叠的输出路径</strong></p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=YzFhNGViYjVjMGUyOTExZmE1ZmE0OGJkNzM0MTg5N2FfUDhHVTJMZ3dIcmVCdndXSHpUWDFXZ2NGMXF5QVlOT0NfVG9rZW46RFh1bWI1Tkw5b3JoOTZ4YWNHZmNjT2VTbmNkXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/3%E9%87%8D%E5%8F%A0%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6%E5%A4%B9.png" alt=""></p>
 <p>重新安装无效，改 chipyard 版本无效，若暂且搁置后面能运行到第 4 步。</p>
 <p>后来尝试在根目录下安装，结果出现一大堆警告，最后在 common.mk 的 380 行强行终止。</p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=Mjk3ZDczNjY2ZDhkYThhOTk2MDcwZTMyZGJhYzU3NmZfaWJISnJ4ZUpIOWFoM3ZQb29lU1EzSjZWcW1ZU2N3clpfVG9rZW46U1RaaGJiclF2b0VtcDZ4R0xmZ2N1Q2M4blZkXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/7%E5%BC%82%E5%B8%B8%E7%BB%88%E6%AD%A2.png" alt=""></p>
 <p>此时再继续会导致 “make -C software/libgemmini install” 指令不通过。</p>
 <p>解决方法：<span class="exturl" data-url="aHR0cDovL3huLS1pbml0LXN1Ym1vZHVsZXMtbm8tcmlzY3YtdG9vbHMtaGcxNGNvejNqbGw3aHZpNWk4NzJiLnNo">多运行几次 init-submodules-no-riscv-tools.sh</span> 和 <span class="exturl" data-url="aHR0cDovL2J1aWxkLXRvb2xjaGFpbi1leHRyYS5zaA==">build-toolchain-extra.sh</span> 两个脚本后再次尝试，发现正常了。</p>
 <p>其中发现有因为网络问题无法连接的情况，科学 上网也没用。</p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=N2E1Y2UwZGI0NzA3YWRhNjg0NzBkYTA4ZTdiNjkxZGJfVGU4ellPam9xVG1IaEMxc2RoUHk3ODZvUllxQXFpd3lfVG9rZW46WHVqQmJRdk9IbzNrejl4WkJLaWNtOHZ0bm9jXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/8%E9%83%A8%E5%88%86%E5%8C%85%E6%97%A0%E6%B3%95%E4%B8%8B%E8%BD%BD.png" alt=""></p>
 <p>不过好像不影响。</p>
 <h3 id="2setting-up-gemmini"><a class="markdownIt-Anchor" href="#2setting-up-gemmini">#</a> <strong>2.Setting Up Gemmini</strong></h3>
 <p>这一步很顺利，按流程即可。</p>
 <h3 id="3building-gemmini-software"><a class="markdownIt-Anchor" href="#3building-gemmini-software">#</a> <strong>3.Building Gemmini Software</strong></h3>
 <p>按照流程执行到 “./build.sh” 时，<strong>报错 “autoconf: 未找到命令”</strong></p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=ODVjOTEwODNlNjYwYjRmNDBhYTljMzFjOGYyZDYxY2ZfR0U0RDFOVW1KTXhNangwWDBMSlpQRjJXOXVtS2FKaG5fVG9rZW46S2NHSGJvdkhnbzBlcUx4dkQ1NmMxcWRUbnNGXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/4%E6%9C%AA%E6%89%BE%E5%88%B0%E5%91%BD%E4%BB%A4.png" alt=""></p>
 <p>解决方法：安装缺少的依赖，输入 “sudo apt install -y autoconf”</p>
 <h3 id="4building-gemmini-hardware-and-cycle-accurate-simulators"><a class="markdownIt-Anchor" href="#4building-gemmini-hardware-and-cycle-accurate-simulators">#</a> <strong>4.Building Gemmini Hardware and Cycle-Accurate Simulators</strong></h3>
 <p>报错：环境变量 PATH 找不到 verilator</p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=ZTc2MDRlZTQyOTQ3MWEzNjMxYmI1MTM0NDY2YTllNjlfVERFVmUwM1I1RXhNc1BmaXBvT25LcWxKNHlOaXpZd09fVG9rZW46T1V6WmJ1TWZPb25Xb3V4cmhpZWMzeDN6bmZlXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/5%E6%8A%A5%E9%94%99.png" alt=""></p>
 <p>解决方法：sudo apt-get install verilator</p>
 <p>update：改 conda 环境</p>
 <p><strong>报错：找不到 libriscv</strong></p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=N2U2ZmQ4OGE1MjBlZjIxOGMxNGQ0MDAwNjRmMjdkYjZfcm9sZGUwMWNyQURMSzBoM0VIbTNUOE1iaUZEMWlqM2NfVG9rZW46Qm8zQ2JpQmFSb1J5V2l4NldFamM4b1ZpbkJnXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/6%E6%8A%A5%E9%94%99.png" alt=""></p>
 <p>原因：可能是之前报错的指令 “./build-setup.sh riscv-tools” 导致，缺少某些包。重新加载 env.sh 无效</p>
 <p>解决方法：发现并不是上述原因，是没有改 conda 环境，应该改成如下所示，之后的操作必须改 conda！</p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=N2U3ZTI1NWIwM2MyZTYyNzRjMDQ3ZjMwNTA4NzIwNDZfZElzVjNRZVFWN0x4YmpVaWVwS0NBUkx1cjB3ZGg3TEpfVG9rZW46UUM0dWJTeGdSb3k3eTB4eFBUNWNlZVlzbjhmXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/8b92e64c-3688-4b41-9d62-1b7ffd5ad00f.png" alt=""></p>
 <h3 id="5building-gemmini-functional-simulators"><a class="markdownIt-Anchor" href="#5building-gemmini-functional-simulators">#</a> 5.<strong>Building Gemmini Functional Simulators</strong></h3>
 <p><strong>报错：make 错误</strong></p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=ZDE4ODdiNTA1Y2Y4YmU2MjllMTQyMjU0NWI2YWNmZmJfZ2xrRnNTTk5hYU1keDlob0FkNng5WTNnODNSazZIRWxfVG9rZW46S3R3S2JPOFJhb0txUzd4WlpORGNDV1RGbjFlXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/make5b49209d-8b8c-4af7-860b-44d258b05ff4.png" alt=""></p>
 <p>会影响 6 (2) 操作，若 6 (2) 报错找不到上图文件，4、5 可以多执行几次。注意 conda 环境。</p>
 <h3 id="6run-simulators"><a class="markdownIt-Anchor" href="#6run-simulators">#</a> 6.<strong>Run Simulators</strong></h3>
 <h4 id="1run-a-large-dnn-workload-in-the-functional-simulator"><a class="markdownIt-Anchor" href="#1run-a-large-dnn-workload-in-the-functional-simulator">#</a> （1）Run a large DNN workload in the functional simulator</h4>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=N2VhYTIwMWZkODkxYTZmYjRiNzE5ODBiZjRhZDQ0MTRfN1ZyUzZmUVdFd3VLeHNWQVZBV1NHalJwQXk1MERjZDBfVG9rZW46RVBaamJlcWxKb1F5WWd4eldZVGNmQ0tPbjdmXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/9%E6%AD%A3%E5%B8%B8%E8%BF%90%E8%A1%8C.png" alt=""></p>
 <p>运行结果：</p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=MTVmMmI3NGFlYjU3YzYzYmQ5ZmIxNDc1ZThjMDdhODdfcmZvNDJjajZySUw2SWRpbEs2ZjRTVWYyMGZja1BicFNfVG9rZW46UkJKVGJQaTkxb29OV3N4NjNJemMyNTZSbjBkXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/10.png" alt=""></p>
 <h4 id="2run-a-smaller-workload-in-baremetal-mode-on-a-cycle-accurate-simulator"><a class="markdownIt-Anchor" href="#2run-a-smaller-workload-in-baremetal-mode-on-a-cycle-accurate-simulator">#</a> （2）Run a smaller workload in baremetal mode, on a cycle-accurate simulator</h4>
 <p><strong>报错：找不到文件</strong></p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=MjdlNTc1NTQwYWNkM2Y2MGM1ODk0ZGY1MjM3OTViZGRfU3NIc0RaMTBmSVdDYUs5RnZMUHdZRzRLV3A3VUJMQWNfVG9rZW46SHltU2JxM3dBbzF1bWZ4ZXI0emNpeHZYbmtmXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/11.png" alt=""></p>
 <p>解决方法：重复 4、5 中的操作，多 make 几次，会出现下面这个文件</p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=ZWZkNjY5OTJlMzg5MzZkYzllNDhhNjc1MjA5YzFkMjRfMnJSbEt3Z3U4YWZQRG9TN2FQVmRtOEh0RTVWcWQ1MlFfVG9rZW46RVVrTGJEMjQ1b1JINU14V3BWc2NUVHAybmtmXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/13.png" alt=""></p>
 <p>运行结果：</p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=MGYwNjhkOTdjZTNlZWYzMTk4ODcxNmQzNGFhODU4N2ZfMzNueE5DaFBTWHlHeDZZaHRhU0ZRZ3BSbHNpQ0F4dVVfVG9rZW46UUxmUWJPcTMzb2R1Q0h4UTB0TGM3T1V2bk96XzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/14.png" alt=""></p>
 <h4 id="3run-a-smaller-workload-with-the-proxy-kernel-on-a-cycle-accurate-simulator"><a class="markdownIt-Anchor" href="#3run-a-smaller-workload-with-the-proxy-kernel-on-a-cycle-accurate-simulator">#</a> （3）Run a smaller workload with the proxy-kernel, on a cycle accurate simulator</h4>
 <p>运行结果：</p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=YTAyNGRkNGFmN2M3ZDZlMmY5NDY4MGYwOGQ3MTljYWVfM2g4VUp4WHJLRWFOWmVqWDR2ZnJyeW1vN1ZyMnJJRnpfVG9rZW46WmZMSWI2M1dyb3hKQkl4UWJIcmNPQmtXbkVmXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/15.png" alt=""></p>
 <h2 id="二-buddy-mlir环境配置"><a class="markdownIt-Anchor" href="#二-buddy-mlir环境配置">#</a> 二、buddy-mlir 环境配置</h2>
 <h3 id="1llvmmlir-dependencies"><a class="markdownIt-Anchor" href="#1llvmmlir-dependencies">#</a> 1.LLVM/MLIR Dependencies</h3>
 <p>安装 llvm 时报错：cmake 失败</p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=MmE0Yjc5OTU3NTVhMTlhZjBiNGQxNzVjODFhNmE2NTNfUHR4bjBkdGVnalRHYVVYTlVIRWVVZDd3RUpVYkFIZmNfVG9rZW46UUtVU2I0MXFIb0FwR3V4R21Ka2M5aGNnbkhkXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/16.png" alt=""></p>
 <p>想办法重新装 llvm，结果又报错：用不了 Ninja</p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=YzE0ODZkMDJiNWJmNzNiNWM1NmRmM2M4Zjk1ZGQ5MjBfa3VXWnhNSGt6YXRGbDRSWFBwOW1Qdk9WNFczNkRrY2hfVG9rZW46VFpBd2JCQndHb0pTN1h4cWxvZ2NpVEd1bjhjXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/17.png" alt=""></p>
 <p>解决方法：降低 cmake 版本无效，安装 ninja-build 后成功</p>
 <p>报错：内存不足，build 被终止</p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=NTUwZmQ1ZTJhYTkyNWE3OWY3ZDUyNDI2M2NlYTc4OGJfRmZzWlpYRmF1T3VFUG9DeldvT1BiNVliUjlCeDYxbWtfVG9rZW46SGE0SGJRSWpNb0tLcWN4eTVRVmNUTU9CbnhoXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/18.png" alt=""></p>
 <p>解决方法：限制进程数， <code>ninja -C build check-llvm -j4 </code> 限制 4 进程</p>
 <p><strong>链接报错：</strong></p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=ZTEyYTJiNTQwYjliNzYzOGE3OWJhNWMzZDNiNTMzMzlfR1RDN1RDZDZDTk9OTVd6bXVvRlRZSzBsOFhzWHJHNkdfVG9rZW46SXJLV2JDRUlSb3U2U0F4a0xGSWNWR3JjbjVlXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/19.png" alt=""></p>
 <p>解决方法：可能是子任务出错，重新跑一遍就行。</p>
 <p>报错： <code>ctime:80:11: error: 'timespec_get' has not been declared in '::'</code></p>
 <p>解决方法：<span class="exturl" data-url="aHR0cHM6Ly9yb290LWZvcnVtLmNlcm4uY2gvdC9lcnJvci10aW1lc3BlYy1nZXQtaGFzLW5vdC1iZWVuLWRlY2xhcmVkLXdpdGgtY29uZGEtcm9vdC1wYWNrYWdlLzQ1NzEyLzY=">论坛</span>上说是 conda 环境和系统环境冲突，尝试用 <code>conda upgrade -c conda-forge --all</code>  更新 conda 无效。搞到后来又发现环境不一致问题，服了。考虑到一开始用的是 miniconda3，最后改为安装 miniforge3 就不报错了。</p>
@@ -215,53 +214,54 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
 <h3 id="3build-and-test-llvmmlirclang"><a class="markdownIt-Anchor" href="#3build-and-test-llvmmlirclang">#</a> 3.<strong>Build and Test</strong> LLVM/MLIR/CLANG</h3>
 <p>等待时间较长，还是一步安装的那个比较好 hh</p>
 <p>其中运行  <code>ninja check-mlir check-clang</code>  时有一个没 pass</p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=NTdiNTlkNzI2MmRkYTU1ZmJkZGU3NWQxNTBlMzE2NWZfb1M0UUczRjRxZDdPRjRtMWhmNDc3Sk9sMGxjTjhZOW5fVG9rZW46T3ZsbWJYeTRCb1hSWUR4d2paQmNCZzQzbldjXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/20.png" alt=""></p>
 <p>解决方法还没找到。它是一个无关紧要的包，不影响后续流程。</p>
 <p><strong>报错：CMakeLists.txt 不匹配</strong></p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=MzA3OTk5ZGI4M2M2YWZjNzMyNmRiZTAyZjI1MGJlNzVfOUJRZ2R5SmhGV2V0WVlwVDRLNjhsY01KajRIb1N4M0FfVG9rZW46SWhtZWJtRnZOb2xQeE94RE1qZWN3SGdtbmdoXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/29.png" alt=""></p>
 <p>解决方法：这是由于重复 cmake 且两次缓存不符导致的，删除 CMakeCache.txt 文件即可。</p>
 <h3 id="4build-buddy-mlir"><a class="markdownIt-Anchor" href="#4build-buddy-mlir">#</a> 4.Build buddy-mlir</h3>
 <p>后面的都能正常运行，最后一条测试 ninja check-buddy 结果：</p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=OWNmYjg5OTM5N2VhMTI0NTMxZDc4NWRjNzU5Y2I2YWRfRGsxcFcwc3V5cTV5enA0NDBQTGdWQzNpUE56M29MdzRfVG9rZW46RXFVRWJNck1sb3hKb0Z4UzNWS2Nyc0s3bnpiXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/21.png" alt=""></p>
 <h2 id="三-buddy-benchmark环境配置"><a class="markdownIt-Anchor" href="#三-buddy-benchmark环境配置">#</a> 三、buddy-benchmark 环境配置</h2>
 <h3 id="1choose-and-build-dependencies"><a class="markdownIt-Anchor" href="#1choose-and-build-dependencies">#</a> 1.<strong>Choose and Build Dependencies</strong></h3>
 <p>很顺利</p>
 <h3 id="2gemmini-benchmark"><a class="markdownIt-Anchor" href="#2gemmini-benchmark">#</a> 2.<strong>Gemmini Benchmark</strong></h3>
 <p><strong>报错：找不到 buddy-mlir 的包</strong></p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=YzM2OWE3MTc1NGM2OWNmZTkwNjIwMzIzNjc3ZThhMDVfaEIxdlZEbjVQR0c0U21GV2Q1UkkxS2lLcUJnQnltY09fVG9rZW46RFREYmJ6Y3NNbzJTWVN4UjRKRGNWdUV5bmdLXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/22.png" alt=""></p>
 <p>解决方法：添加一下环境变量</p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=MWNmMDUwMjJjNjBmZTMxNTg1NjhlODE1N2UyMDBiZjdfRVBCRkxOWkZob1ljcTl2ekNqYTlCdFhtVjJQTHdnVm5fVG9rZW46S1FhVGJTUXY4b08wUVJ4dlFQSWNxa2VObnpnXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/23.png" alt=""></p>
 <p><strong>报错：找不到路径</strong></p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=OTliY2M3MjY5M2IwYjE1MGVlM2E3YTAzNjQzYjA1MzZfbmtEM2pkUE5UQk9CdXRFc1hydFUwbGNlNEw0UVIwbGtfVG9rZW46UmZQbmJ4SDNnb2gyanB4VWJsSmN2WlJ4bjBmXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/25.png" alt=""></p>
 <p>解决方法：上一步中的目录改成自己 build 的地址</p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=YzQ4NDQ3ODUxMjU5MjFjYmM5N2ZlZTk1N2Y1N2M1Mzdfdjl1ZjFSd2I2a2hwYmJ6cHZoT2hPakFLUDRaOTlwZ21fVG9rZW46T1NOUWJPQkRnb0txRTV4NFNFU2NEa3ExblVtXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/26.png" alt=""></p>
 <p><strong>报错：找不到 riscv64-unknown-linux-gnu-g++</strong></p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=ZjYyN2FlZWYwOWZmOTczODNiOWYyNDEwNDRiMDY3ODNfSVJuNUFXQmIyTktKS3Fja3ZvNjFZekdBdjZBV0Jhb3pfVG9rZW46UUdTa2JicGhFbzRlem54eExWTmNBUUM4bk1nXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/24.png" alt=""></p>
 <p>解决方法：换成 chipyard 中的 conda 环境就行</p>
 <p><strong>报错：找不到头文件</strong></p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=Nzg3OTNjOGIzYjNkNWZmZTAzZDk1M2JmYmE3Yzc0ODJfMHFhWU5qeEEyNkdnMHdrQTVMZXpJSVpCd29lWmJoWlZfVG9rZW46TW4xOGJiOTFJb1lsejJ4eHIxY2N6STBWbmpmXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/27.png" alt=""></p>
 <p>解决方法：尝试从另一个文件中获取同名文件看看能不能用，能通过但是最后有一个其它地方报错了，说明不仅仅是缺少这一个头文件的问题，应该是之前的安装有些疏忽。换了 miniforge 环境，重复一遍 buddy-mlir 的安装，再走一遍，头文件就能找到了。</p>
 <p>头文件解决后，ninja 时又出现如下报错：</p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=ODM5NzIyYTFmMTI3ZGJlZGNiZjIyYTRhNmIxZDgyNDFfWUFBN1lldmNpRTdOYlBuMTR2VFl2QW53R1dIeEN0NTBfVG9rZW46RE1VbWJONmNWbzNyREV4NHZEeWNUQ0VIbjFjXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p>!!<span class="exturl" data-url="aHR0cHM6Ly9kb2RvYmlyZC1ibG9nLm9zcy1jbi1zaGFuZ2hhaS5hbGl5dW5jcy5jb20vaW1nMy8zMC5wbmc="></span></p>
 <p>解决方法：尝试过重装 chipyard、buddy-mlir、自行配置 llvm 均无效，最后在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2J1ZGR5LWNvbXBpbGVyL2J1ZGR5LWJlbmNobWFyay9pc3N1ZXMvNDg="> issue</span> 中找到方案。需要安装 git lfs，保证 ResNet-101 被成功 clone，具体代码如下：</p>
-<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">curl</span> <span class="token parameter variable">-s</span> https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">bash</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> git-lfs</pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token function">git</span> lfs <span class="token function">install</span></pre></td></tr></table></figure><p>重新 clone 一下 buddy-benchmark，发现这次可以运行了</p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=ZGJjNmM3Njg0MzdmNDI4ZDM5MDNlMjU5M2MwMmYzMWRfT1lnVzE2RWc5cTl2WDJxdGpoZ1NkVXpYQlRSYXVLdVFfVG9rZW46VlpWbGI1ZlNBb0Nwa2Z4bTJGYWN2TEhjblV0XzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<figure class="highlight shell"><figcaption data-lang="Bash"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token function">curl</span> <span class="token parameter variable">-s</span> https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">bash</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> git-lfs</pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token function">git</span> lfs <span class="token function">install</span></pre></td></tr></table></figure><p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/31.png" alt=""></p>
+<p>重新 clone 一下 buddy-benchmark，发现这次可以运行了</p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/32.png" alt=""></p>
 <p>果然是缺少文件。</p>
 <p>最后，修改一下 chipyard 中 GemminiCustomConfigs.scala 文件配置，将 baselineInferenceConfig 改为 defaultFpConfig，重新生成 spike。</p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=OTRiMjcxY2QzNTAwNGY4ZDc4MWE2YjZjOGFhMjk2NTZfTkVUb0Q4Z0NWTUtUb2RxNVlaaXpiODFDZHYzNlNpR3ZfVG9rZW46U1hkc2JDVGlTb0lqNFV4QmdrS2NhRXhlbnZoXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/33.png" alt=""></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/34.png" alt=""></p>
 <p>完结撒花～～～</p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=MWQ3ZmEwNjExZGFhMGE5ZTc2N2U5NWExZjUxMGQ5Y2RfTWVucmNseUVBcWM5YVBpZ2ZXZHdTNldWc0ZJRzdSZ1ZfVG9rZW46VkFNN2JHNTBObzNKanh4enBWM2NXYm9IbkFlXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
 <h1 id="2gemmini架构"><a class="markdownIt-Anchor" href="#2gemmini架构">#</a> 2.Gemmini 架构</h1>
 <h2 id="一-gemmini概述"><a class="markdownIt-Anchor" href="#一-gemmini概述">#</a> 一、Gemmini 概述</h2>
 <p>Gemmini 项目是一个全系统、全栈的 DNN 硬件探索和评估平台，使得我们能够深入了解系统和软件堆栈之间的相互作用对 DNN 性能的影响。结构图如下所示：</p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=MmNmOTk5MDVkZjQxMzBiMjBjYjUyNWM5M2ViY2NmZjRfZ3lZaGJpbUtsRWJiMUdQVVd6WGFPVG9jandpczU4QnpfVG9rZW46T2szMGJYVVFSbzc5ckl4MGVqQWN0TUNwbkJBXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/image-20230811151747268.png" alt="image-20230811151747268"></p>
 <p>Gemmini 使用 RISC-V 自定义指令实现 RoCC 加速器，其单元使用 Rocket 或 BOOM 块的 RoCC 端口，默认情况下通过系统总线连接到内存系统。</p>
 <p>该加速器的核心是脉动阵列，主要用于执行矩阵乘法，支持输出平稳和权重平稳数据流。</p>
 <p>阵列的输入和输出存储在由成组 SRAM 组成的显式管理暂存器中，由 DMA 加速暂存器数据和主存数据的传输。</p>
 <p>此外，由于在处理权重平稳数据流时需要使用脉动阵列外部的累加器，所以需要添加一个配备加法器单元的最终 SRAM 组，这样脉动数组就能将结果存入任意地址的累加器或者从累加器读取数据。</p>
 <h2 id="二-脉动阵列"><a class="markdownIt-Anchor" href="#二-脉动阵列">#</a> 二、脉动阵列</h2>
 <p>脉动阵列是加速器的核心组成部分，结构如下：</p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=YTY3YWYzMjczNjFmZTk3NzA4OGUxYThkMmNmZDg3OTJfWlhUVVduNUhCQ0lMc3dEWEk0T29sTFJvMzVYdUtwdXZfVG9rZW46UzdCZ2I2T0Vpb1dDMnJ4NGZQaGN2MnJkbldkXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/image-20230811151810137.png" alt="image-20230811151810137"></p>
 <p>其主要参数有：</p>
 <ol>
 <li>脉动数组维度 (tileRows, tileColumns, meshRows, meshColumns)：脉动数组由 2 级层次结构组成，其中每个图块都是完全组合的，而图块网格在每个图块之间具有管道寄存器。</li>
@@ -277,13 +277,13 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
 <h2 id="四-内存寻址"><a class="markdownIt-Anchor" href="#四-内存寻址">#</a> 四、内存寻址</h2>
 <p>下图是 2*2 脉动阵列内存寻址的示意图。内存寻址按行进行，图中 Tile 一行有 2 个 PE 单元，则宽度 DIM 为 2。其中暂存器数据类型是 8 位的 int 值，累加器数据类型是 32 位的 int 值。</p>
 <p>Gemmini 中的内存编码均为 32 位长，最高的 3 位是保留位，用于区分寻址累加器还是暂存器、写入时是覆盖还是继续累加、从何处读取数据、是否读取按比例缩小的数据等等。</p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=YjA1MWJiMjk3OTUzYTJhYWQwMWNmNDJhMWUxOThjNTZfNWNFQ3RIU0ExRGtWNFRKUHg5bkJkeDNuMlI0NGxyMWZfVG9rZW46SUNQRmJoQ2lNb1BpRm54ZFZVMmM1TlNSbnFlXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/image-20230811151824174.png" alt="image-20230811151824174"></p>
 <h2 id="五-指令"><a class="markdownIt-Anchor" href="#五-指令">#</a> 五、指令</h2>
 <p>这里只列举两个数据移动指令，更多的指令可以在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3VjYi1iYXIvZ2VtbWluaQ=="> Gemmini 仓库</span>查看。</p>
-<p><strong>（i）将数据从主存储器移至暂存器：mvin</strong></p>
+<h3 id="i将数据从主存储器移至暂存器mvin"><a class="markdownIt-Anchor" href="#i将数据从主存储器移至暂存器mvin">#</a> （i）将数据从主存储器移至暂存器：mvin</h3>
 <p>指令 <code>mvin rs1, rs2</code>  中，rs1 是加载到暂存器的虚拟 DRAM 地址，rs2 的 0<sub>31 位记录本地暂存器或累加器地址，32</sub>63 位记录要加载的行列数。即数据从 rs1 流向 rs2。其中加载的列数必须小于 Tile 中每行 TE 宽度 DIM，否则会拆分后分块加载。</p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=YjBhZTY3NTkwMmQ1N2Y2YzEzNDhiODc3ZjhhOWMzZTNfeXZzQldqWURzb3phWjRtNUVlRnZsNzBYZmtzUkxLd0JfVG9rZW46RzB2UmI4ZWdPb2M1U2d4RTlOd2M3WVRCbk9nXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
-<p><strong>（ii）将数据从暂存器移至 L2/<strong><strong>DRAM</strong></strong>：mvout</strong></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/image-20230811151834783.png" alt="image-20230811151834783"></p>
+<h3 id="ii将数据从暂存器移至-l2drammvout"><a class="markdownIt-Anchor" href="#ii将数据从暂存器移至-l2drammvout">#</a> （ii）将数据从暂存器移至 L2/DRAM：mvout</h3>
 <p>指令 <code>mvout rs1, rs2</code>  中，rs1 是从暂存器写入的虚拟 DRAM 地址，rs2 的 0<sub>31 位记录本地暂存器地址，32</sub>63 位同样记录加载行列数。即数据从 rs2 流向 rs1。</p>
 <h1 id="3mlir"><a class="markdownIt-Anchor" href="#3mlir">#</a> 3.MLIR</h1>
 <h2 id="一-mlir概述"><a class="markdownIt-Anchor" href="#一-mlir概述">#</a> 一、MLIR 概述</h2>
@@ -354,7 +354,7 @@ def main() &#123;
 </code></pre>
 <p>该段代码还是比较高层的，还可以继续部分 Lowering，混合不同的 Dialect Lowering 到 LLVM IR。</p>
 <p>总体流程可以如下表示：</p>
-<p><img data-src="https://hjdzsa51s9.feishu.cn/space/api/box/stream/download/asynccode/?code=YzEwMDU0YzExNDdmODcwYzNhYzc1MGE4OGIzZGFlNGVfb2NqdWd3ZTQ0blJoWVk1cXJJcDc3bENNbzZXMGlPa1RfVG9rZW46WlJ3WmJydTZubzBLSFV4am80NWNpZ1pIbnBlXzE2OTEyMzgxODQ6MTY5MTI0MTc4NF9WNA" alt="img"></p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/image-20230811151931844.png" alt="image-20230811151931844"></p>
 <h2 id="三-gemmini方言分析"><a class="markdownIt-Anchor" href="#三-gemmini方言分析">#</a> 三、Gemmini 方言分析</h2>
 <p>由于指令较多，这里只选取几个详细讲解。</p>
 <h3 id="1mvin-mvout"><a class="markdownIt-Anchor" href="#1mvin-mvout">#</a> （1）mvin-mvout</h3>
@@ -490,7 +490,7 @@ func.func @main() -&gt; i64 &#123;
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">更新于</span>
-    <time title="修改时间：2023-08-05 20:34:09" itemprop="dateModified" datetime="2023-08-05T20:34:09+08:00">2023-08-05</time>
+    <time title="修改时间：2023-08-11 15:19:38" itemprop="dateModified" datetime="2023-08-11T15:19:38+08:00">2023-08-11</time>
   </span>
 </div>
 
@@ -546,7 +546,7 @@ func.func @main() -&gt; i64 &#123;
   <div class="panels">
     <div class="inner">
       <div class="contents panel pjax" data-title="文章目录">
-          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">1.</span> <span class="toc-text"> 1. 环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80-gemmini%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">1.1.</span> <span class="toc-text"> 一、Gemmini 环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E9%85%8D%E7%BD%AEchipyard%E7%8E%AF%E5%A2%83"><span class="toc-number">1.1.1.</span> <span class="toc-text"> 1. 配置 Chipyard 环境：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2setting-up-gemmini"><span class="toc-number">1.1.2.</span> <span class="toc-text"> 2.Setting Up Gemmini</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3building-gemmini-software"><span class="toc-number">1.1.3.</span> <span class="toc-text"> 3.Building Gemmini Software</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4building-gemmini-hardware-and-cycle-accurate-simulators"><span class="toc-number">1.1.4.</span> <span class="toc-text"> 4.Building Gemmini Hardware and Cycle-Accurate Simulators</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5building-gemmini-functional-simulators"><span class="toc-number">1.1.5.</span> <span class="toc-text"> 5.Building Gemmini Functional Simulators</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6run-simulators"><span class="toc-number">1.1.6.</span> <span class="toc-text"> 6.Run Simulators</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1run-a-large-dnn-workload-in-the-functional-simulator"><span class="toc-number">1.1.6.1.</span> <span class="toc-text"> （1）Run a large DNN workload in the functional simulator</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2run-a-smaller-workload-in-baremetal-mode-on-a-cycle-accurate-simulator"><span class="toc-number">1.1.6.2.</span> <span class="toc-text"> （2）Run a smaller workload in baremetal mode, on a cycle-accurate simulator</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3run-a-smaller-workload-with-the-proxy-kernel-on-a-cycle-accurate-simulator"><span class="toc-number">1.1.6.3.</span> <span class="toc-text"> （3）Run a smaller workload with the proxy-kernel, on a cycle accurate simulator</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C-buddy-mlir%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.</span> <span class="toc-text"> 二、buddy-mlir 环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1llvmmlir-dependencies"><span class="toc-number">1.2.1.</span> <span class="toc-text"> 1.LLVM&#x2F;MLIR Dependencies</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2clone-and-initialize"><span class="toc-number">1.2.2.</span> <span class="toc-text"> 2.Clone and Initialize</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3build-and-test-llvmmlirclang"><span class="toc-number">1.2.3.</span> <span class="toc-text"> 3.Build and Test LLVM&#x2F;MLIR&#x2F;CLANG</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4build-buddy-mlir"><span class="toc-number">1.2.4.</span> <span class="toc-text"> 4.Build buddy-mlir</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89-buddy-benchmark%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">1.3.</span> <span class="toc-text"> 三、buddy-benchmark 环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1choose-and-build-dependencies"><span class="toc-number">1.3.1.</span> <span class="toc-text"> 1.Choose and Build Dependencies</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2gemmini-benchmark"><span class="toc-number">1.3.2.</span> <span class="toc-text"> 2.Gemmini Benchmark</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2gemmini%E6%9E%B6%E6%9E%84"><span class="toc-number">2.</span> <span class="toc-text"> 2.Gemmini 架构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80-gemmini%E6%A6%82%E8%BF%B0"><span class="toc-number">2.1.</span> <span class="toc-text"> 一、Gemmini 概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C-%E8%84%89%E5%8A%A8%E9%98%B5%E5%88%97"><span class="toc-number">2.2.</span> <span class="toc-text"> 二、脉动阵列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89-%E8%BD%AF%E4%BB%B6%E9%83%A8%E5%88%86"><span class="toc-number">2.3.</span> <span class="toc-text"> 三、软件部分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B-%E5%86%85%E5%AD%98%E5%AF%BB%E5%9D%80"><span class="toc-number">2.4.</span> <span class="toc-text"> 四、内存寻址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94-%E6%8C%87%E4%BB%A4"><span class="toc-number">2.5.</span> <span class="toc-text"> 五、指令</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3mlir"><span class="toc-number">3.</span> <span class="toc-text"> 3.MLIR</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80-mlir%E6%A6%82%E8%BF%B0"><span class="toc-number">3.1.</span> <span class="toc-text"> 一、MLIR 概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C-toy%E8%AF%AD%E8%A8%80"><span class="toc-number">3.2.</span> <span class="toc-text"> 二、toy 语言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89-gemmini%E6%96%B9%E8%A8%80%E5%88%86%E6%9E%90"><span class="toc-number">3.3.</span> <span class="toc-text"> 三、Gemmini 方言分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1mvin-mvout"><span class="toc-number">3.3.1.</span> <span class="toc-text"> （1）mvin-mvout</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2matmul-os"><span class="toc-number">3.3.2.</span> <span class="toc-text"> （2）matmul-os</span></a></li></ol></li></ol></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">1.</span> <span class="toc-text"> 1. 环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80-gemmini%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">1.1.</span> <span class="toc-text"> 一、Gemmini 环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E9%85%8D%E7%BD%AEchipyard%E7%8E%AF%E5%A2%83"><span class="toc-number">1.1.1.</span> <span class="toc-text"> 1. 配置 Chipyard 环境：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2setting-up-gemmini"><span class="toc-number">1.1.2.</span> <span class="toc-text"> 2.Setting Up Gemmini</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3building-gemmini-software"><span class="toc-number">1.1.3.</span> <span class="toc-text"> 3.Building Gemmini Software</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4building-gemmini-hardware-and-cycle-accurate-simulators"><span class="toc-number">1.1.4.</span> <span class="toc-text"> 4.Building Gemmini Hardware and Cycle-Accurate Simulators</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5building-gemmini-functional-simulators"><span class="toc-number">1.1.5.</span> <span class="toc-text"> 5.Building Gemmini Functional Simulators</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6run-simulators"><span class="toc-number">1.1.6.</span> <span class="toc-text"> 6.Run Simulators</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1run-a-large-dnn-workload-in-the-functional-simulator"><span class="toc-number">1.1.6.1.</span> <span class="toc-text"> （1）Run a large DNN workload in the functional simulator</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2run-a-smaller-workload-in-baremetal-mode-on-a-cycle-accurate-simulator"><span class="toc-number">1.1.6.2.</span> <span class="toc-text"> （2）Run a smaller workload in baremetal mode, on a cycle-accurate simulator</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3run-a-smaller-workload-with-the-proxy-kernel-on-a-cycle-accurate-simulator"><span class="toc-number">1.1.6.3.</span> <span class="toc-text"> （3）Run a smaller workload with the proxy-kernel, on a cycle accurate simulator</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C-buddy-mlir%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.</span> <span class="toc-text"> 二、buddy-mlir 环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1llvmmlir-dependencies"><span class="toc-number">1.2.1.</span> <span class="toc-text"> 1.LLVM&#x2F;MLIR Dependencies</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2clone-and-initialize"><span class="toc-number">1.2.2.</span> <span class="toc-text"> 2.Clone and Initialize</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3build-and-test-llvmmlirclang"><span class="toc-number">1.2.3.</span> <span class="toc-text"> 3.Build and Test LLVM&#x2F;MLIR&#x2F;CLANG</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4build-buddy-mlir"><span class="toc-number">1.2.4.</span> <span class="toc-text"> 4.Build buddy-mlir</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89-buddy-benchmark%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">1.3.</span> <span class="toc-text"> 三、buddy-benchmark 环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1choose-and-build-dependencies"><span class="toc-number">1.3.1.</span> <span class="toc-text"> 1.Choose and Build Dependencies</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2gemmini-benchmark"><span class="toc-number">1.3.2.</span> <span class="toc-text"> 2.Gemmini Benchmark</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2gemmini%E6%9E%B6%E6%9E%84"><span class="toc-number">2.</span> <span class="toc-text"> 2.Gemmini 架构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80-gemmini%E6%A6%82%E8%BF%B0"><span class="toc-number">2.1.</span> <span class="toc-text"> 一、Gemmini 概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C-%E8%84%89%E5%8A%A8%E9%98%B5%E5%88%97"><span class="toc-number">2.2.</span> <span class="toc-text"> 二、脉动阵列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89-%E8%BD%AF%E4%BB%B6%E9%83%A8%E5%88%86"><span class="toc-number">2.3.</span> <span class="toc-text"> 三、软件部分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B-%E5%86%85%E5%AD%98%E5%AF%BB%E5%9D%80"><span class="toc-number">2.4.</span> <span class="toc-text"> 四、内存寻址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94-%E6%8C%87%E4%BB%A4"><span class="toc-number">2.5.</span> <span class="toc-text"> 五、指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#i%E5%B0%86%E6%95%B0%E6%8D%AE%E4%BB%8E%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8%E7%A7%BB%E8%87%B3%E6%9A%82%E5%AD%98%E5%99%A8mvin"><span class="toc-number">2.5.1.</span> <span class="toc-text"> （i）将数据从主存储器移至暂存器：mvin</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ii%E5%B0%86%E6%95%B0%E6%8D%AE%E4%BB%8E%E6%9A%82%E5%AD%98%E5%99%A8%E7%A7%BB%E8%87%B3-l2drammvout"><span class="toc-number">2.5.2.</span> <span class="toc-text"> （ii）将数据从暂存器移至 L2&#x2F;DRAM：mvout</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3mlir"><span class="toc-number">3.</span> <span class="toc-text"> 3.MLIR</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80-mlir%E6%A6%82%E8%BF%B0"><span class="toc-number">3.1.</span> <span class="toc-text"> 一、MLIR 概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C-toy%E8%AF%AD%E8%A8%80"><span class="toc-number">3.2.</span> <span class="toc-text"> 二、toy 语言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89-gemmini%E6%96%B9%E8%A8%80%E5%88%86%E6%9E%90"><span class="toc-number">3.3.</span> <span class="toc-text"> 三、Gemmini 方言分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1mvin-mvout"><span class="toc-number">3.3.1.</span> <span class="toc-text"> （1）mvin-mvout</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2matmul-os"><span class="toc-number">3.3.2.</span> <span class="toc-text"> （2）matmul-os</span></a></li></ol></li></ol></li></ol>
       </div>
       <div class="related panel pjax" data-title="系列文章">
       </div>
@@ -638,16 +638,7 @@ func.func @main() -&gt; i64 &#123;
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2023/05/11/treearray/" title="算法实践-树状数组">算法实践-树状数组</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2023/08/05/gemmini_mlir/" title="gemmini与mlir环境搭建与架构认识">gemmini与mlir环境搭建与架构认识</a></span>
+    <span><a href="/2023/04/22/hello-world/" title="Hello World">Hello World</a></span>
   </li>
 
       
@@ -665,16 +656,7 @@ func.func @main() -&gt; i64 &#123;
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2023/05/17/CSAPP_lab2/" title="计算机系统基础lab2">计算机系统基础lab2</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2023/04/22/hello-world/" title="Hello World">Hello World</a></span>
+    <span><a href="/2023/05/11/treearray/" title="算法实践-树状数组">算法实践-树状数组</a></span>
   </li>
 
       
@@ -684,6 +666,24 @@ func.func @main() -&gt; i64 &#123;
 </div>
 
     <span><a href="/2023/05/12/CSAPP_lab1/" title="计算机系统基础lab1">计算机系统基础lab1</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/05/17/CSAPP_lab2/" title="计算机系统基础lab2">计算机系统基础lab2</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/08/05/gemmini_mlir/" title="gemmini与mlir环境搭建与架构认识">gemmini与mlir环境搭建与架构认识</a></span>
   </li>
 
   </ul>
