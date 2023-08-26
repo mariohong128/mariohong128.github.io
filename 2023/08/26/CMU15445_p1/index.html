@@ -143,29 +143,29 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
     
 
     <h1 id="1lru-k"><a class="markdownIt-Anchor" href="#1lru-k">#</a> 1.LRU-K</h1>
-<p>​		官方给的数据结构中，页面的访问放在 LRUKNode 这个类中，与页面形成一对一的关系，但是在实际操作的时候不太习惯，于是改为传统实现方式。需要一个历史队列记录访问次数 &lt;k 的页面 id 和一个缓存队列记录访问次数&gt; k 的页面 id，这两个队列都再加一个 map 提高查找效率。没有使用到 LRUKNode 类，因此也不需要时间戳，如果后续考虑锁细粒度优化，可能会用上 hh。</p>
+<p>​    官方给的数据结构中，页面的访问放在 LRUKNode 这个类中，与页面形成一对一的关系，但是在实际操作的时候不太习惯，于是改为传统实现方式。需要一个历史队列记录访问次数 &lt;k 的页面 id 和一个缓存队列记录访问次数&gt; k 的页面 id，这两个队列都再加一个 map 提高查找效率。没有使用到 LRUKNode 类，因此也不需要时间戳，如果后续考虑锁细粒度优化，可能会用上 hh。</p>
 <p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/lru-k.png" alt=""></p>
-<p>​		在具体使用 list 的时候，可以将最近使用的结点移动到链表头（删除原有结点，在头部添加新结点），驱离的时候从尾部向前遍历链表。</p>
+<p>​    在具体使用 list 的时候，可以将最近使用的结点移动到链表头（删除原有结点，在头部添加新结点），驱离的时候从尾部向前遍历链表。</p>
 <p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/lru-k2.png" alt=""></p>
 <h1 id="2buffer-pool-manager"><a class="markdownIt-Anchor" href="#2buffer-pool-manager">#</a> 2.Buffer Pool Manager</h1>
-<p>​		总体流程较为简单，缓存命中则在缓存中把对应的 page 返回，没命中则尝试使用 lru-k 在缓存区分配一个页面。注意检查细节，在缓冲池发生替换时遍历所有 pin_count，如果都被 pin 了是不能加载的。</p>
-<p>​		目前的想法比较简单，一整个函数直接用 scope_lock 锁住，防止出现并发错误。刷入磁盘的函数其实是不需要加锁的，因为这个过程是异步进行的，只要是脏页就会被刷到磁盘，并且会有日志检查点记录写入。如果在刷到磁盘之前页面被另一个线程删除，在写入操作（该函数需要锁）时直接报错 IO 失败，即未能写入，这正是想要的效果。如果在刷到磁盘之前页面被修改，日志中会有时间点记录，相当于新的版本而已。</p>
-<p>​		很多细节需要想清楚，比如删除页面时在缓冲池里没有找到该页面，是返回 true 还是 false？在 fetch 页面时如果该页面已经在缓冲池中，pin_count 是否还要增加？</p>
+<p>​    总体流程较为简单，缓存命中则在缓存中把对应的 page 返回，没命中则尝试使用 lru-k 在缓存区分配一个页面。注意检查细节，在缓冲池发生替换时遍历所有 pin_count，如果都被 pin 了是不能加载的。</p>
+<p>​    目前的想法比较简单，一整个函数直接用 scope_lock 锁住，防止出现并发错误。刷入磁盘的函数其实是不需要加锁的，因为这个过程是异步进行的，只要是脏页就会被刷到磁盘，并且会有日志检查点记录写入。如果在刷到磁盘之前页面被另一个线程删除，在写入操作（该函数需要锁）时直接报错 IO 失败，即未能写入，这正是想要的效果。如果在刷到磁盘之前页面被修改，日志中会有时间点记录，相当于新的版本而已。</p>
+<p>​    很多细节需要想清楚，比如删除页面时在缓冲池里没有找到该页面，是返回 true 还是 false？在 fetch 页面时如果该页面已经在缓冲池中，pin_count 是否还要增加？</p>
 <p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/4.png" alt=""></p>
 <h1 id="3pageguard"><a class="markdownIt-Anchor" href="#3pageguard">#</a> 3.PageGuard</h1>
-<p>​		这部分是写一个 RAII 思想，像 C++ 语法题了。需要考虑移动构造自赋值，在赋值时需要先将原来的 page drop 掉，同时去掉原有的锁。</p>
-<p>​		析构函数需要判断是否持有锁，要将锁都释放干净。drop 中虽然有释放锁的操作，但是测试数据中可能有直接绕过的用例，会导致死锁发生。</p>
+<p>​    这部分是写一个 RAII 思想，像 C++ 语法题了。需要考虑移动构造自赋值，在赋值时需要先将原来的 page drop 掉，同时去掉原有的锁。</p>
+<p>​    析构函数需要判断是否持有锁，要将锁都释放干净。drop 中虽然有释放锁的操作，但是测试数据中可能有直接绕过的用例，会导致死锁发生。</p>
 <p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/3.png" alt=""></p>
 <h1 id="4test"><a class="markdownIt-Anchor" href="#4test">#</a> 4.Test</h1>
-<p>​		第一次提交的时候因为没想清楚缓冲池页面删除细节挂了。好在测试输出给出了错误的函数，容易调试。</p>
+<p>​    第一次提交的时候因为没想清楚缓冲池页面删除细节挂了。好在测试输出给出了错误的函数，容易调试。</p>
 <p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/score.png" alt=""></p>
 <p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/1.png" alt=""></p>
-<p>​		第二次提交出现了死锁问题，即上述 page_guard 中的细节。</p>
-<p>​		最终结果全部通过。</p>
+<p>​    第二次提交出现了死锁问题，即上述 page_guard 中的细节。</p>
+<p>​    最终结果全部通过。</p>
 <p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/6.png" alt=""></p>
-<p>​		leaderboard 暂时排在 49 位。没有经过任何优化，直接一把大锁… 测试时占比重最大的是 1ms 的分数，如果所有读写都加大锁，每次操作就都会延迟 1ms 了。</p>
-<p><img data-src="../../../15445/p1/5.png" alt=""></p>
-<p>​		接下来会考虑使用细粒度锁，或者优化 LRU-K 的效率，或者想办法改成异步读写。</p>
+<p>​    leaderboard 暂时排在 49 位。没有经过任何优化，直接一把大锁… 测试时占比重最大的是 1ms 的分数，如果所有读写都加大锁，每次操作就都会延迟 1ms 了。</p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/5.png" alt=""></p>
+<p>​    接下来会考虑使用细粒度锁，或者优化 LRU-K 的效率，或者想办法改成异步读写。</p>
 
   </div>
 
@@ -177,7 +177,7 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">更新于</span>
-    <time title="修改时间：2023-08-26 15:18:25" itemprop="dateModified" datetime="2023-08-26T15:18:25+08:00">2023-08-26</time>
+    <time title="修改时间：2023-08-26 15:21:49" itemprop="dateModified" datetime="2023-08-26T15:21:49+08:00">2023-08-26</time>
   </span>
 </div>
 
@@ -325,7 +325,7 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2023/05/22/CSAPP_lab3/" title="计算机系统基础lab3">计算机系统基础lab3</a></span>
+    <span><a href="/2023/08/26/CMU15445_p1/" title="CMU15-445#project1">CMU15-445#project1</a></span>
   </li>
 
       
@@ -343,7 +343,16 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2023/05/17/CSAPP_lab2/" title="计算机系统基础lab2">计算机系统基础lab2</a></span>
+    <span><a href="/2023/05/22/CSAPP_lab3/" title="计算机系统基础lab3">计算机系统基础lab3</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/08/05/gemmini_mlir/" title="gemmini与mlir环境搭建与架构认识">gemmini与mlir环境搭建与架构认识</a></span>
   </li>
 
       
@@ -361,16 +370,7 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2023/08/26/CMU15445_p1/" title="CMU15-445#project1">CMU15-445#project1</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2023/08/05/gemmini_mlir/" title="gemmini与mlir环境搭建与架构认识">gemmini与mlir环境搭建与架构认识</a></span>
+    <span><a href="/2023/05/17/CSAPP_lab2/" title="计算机系统基础lab2">计算机系统基础lab2</a></span>
   </li>
 
   </ul>
