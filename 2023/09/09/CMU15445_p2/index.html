@@ -155,8 +155,24 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
 <p>​		<img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/%E6%97%A0%E6%A0%87%E9%A2%98.png" alt=""></p>
 <p>​		在插入时可以先乐观插入，一个结点获取下一个结点的读锁后就把父结点的读锁释放，到叶结点再拿写锁。如果中途发现结点要分类，则终止插入，进行悲观插入，向下找值的时候一路拿读锁（头页可以看根结点 kv 对数量直接判断会不会分裂，从而决定要不要先把锁放了），全部改完再将锁释放。</p>
 <h1 id="delete"><a class="markdownIt-Anchor" href="#delete">#</a> Delete</h1>
-<p>​		删除是逻辑最繁琐的，涉及到结点合并，父结点和兄弟结点旋转等操作。</p>
-<p>​		// 未完待续。。。</p>
+<p>删除是逻辑最繁琐的，涉及到结点合并，父结点和兄弟结点旋转等操作。</p>
+<p>总体思路：</p>
+<p>（1）从上至下找到要删除的值，记录走过的结点中的 key，找不到直接退出</p>
+<p>（2）先将该值删除，判断是否小于 MinSize，若不小于则直接退出</p>
+<p>（3）结点剩余 key 数量过少，若有左兄弟且左兄弟 key 数量大于 MinSize，先从左兄弟借一个，否则判断右兄弟从右兄弟借一个</p>
+<p>（4）如果左右兄弟均不可借，若有左兄弟则将当前结点和左兄弟融合，否则和右兄弟融合</p>
+<p>（5）若发生融合，父节点要对应变化，内结点可能合并，递归处理内结点：若当前结点和左兄弟融合，先将对应的父结点的走过的 key 下放到左兄弟末尾，然后将当前结点第一个值放到父结点刚下放的 key 处（可能为空），然后将当前结点剩余的所有值移动到左兄弟；若当前节点和右兄弟融合，先将对应的父结点走过的 key 的后一个下放到当前节点末尾，然后将右兄弟第一个结点放到父结点刚下放的 key 处，然后将右兄弟剩余的所有值移动到当前结点</p>
+<p>贴一段融合内部结点和其左兄弟的代码：</p>
+<figure class="highlight cpp"><figcaption data-lang="C++"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">// merge internal</span></pre></td></tr><tr><td data-num="2"></td><td><pre>		<span class="token comment">// merge into left</span></pre></td></tr><tr><td data-num="3"></td><td><pre>        <span class="token keyword">if</span> <span class="token punctuation">(</span>parent_index <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="4"></td><td><pre>          <span class="token keyword">auto</span> left_id <span class="token operator">=</span> parent_internal<span class="token operator">-></span><span class="token function">ValueAt</span><span class="token punctuation">(</span>parent_index <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="5"></td><td><pre>          <span class="token keyword">auto</span> left_guard <span class="token operator">=</span> bpm_<span class="token operator">-></span><span class="token function">FetchPageWrite</span><span class="token punctuation">(</span>left_id<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="6"></td><td><pre>          <span class="token keyword">auto</span> left_internal <span class="token operator">=</span> left_guard<span class="token punctuation">.</span><span class="token keyword">template</span> <span class="token generic-function"><span class="token function">AsMut</span><span class="token generic class-name"><span class="token operator">&lt;</span>InternalPage<span class="token operator">></span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="7"></td><td><pre></pre></td></tr><tr><td data-num="8"></td><td><pre>          left_internal<span class="token operator">-></span><span class="token function">SetAt</span><span class="token punctuation">(</span>left_internal<span class="token operator">-></span><span class="token function">GetSize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> parent_internal<span class="token operator">-></span><span class="token function">KeyAt</span><span class="token punctuation">(</span>parent_index<span class="token punctuation">)</span><span class="token punctuation">,</span></pre></td></tr><tr><td data-num="9"></td><td><pre>                               cur_internal<span class="token operator">-></span><span class="token function">ValueAt</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="10"></td><td><pre>          left_internal<span class="token operator">-></span><span class="token function">IncreaseSize</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="11"></td><td><pre>          <span class="token comment">// move current to left internal sib</span></pre></td></tr><tr><td data-num="12"></td><td><pre>          <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> left_internal<span class="token operator">-></span><span class="token function">GetSize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> j <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> cur_internal<span class="token operator">-></span><span class="token function">GetSize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">,</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="13"></td><td><pre>            left_internal<span class="token operator">-></span><span class="token function">SetAt</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> cur_internal<span class="token operator">-></span><span class="token function">KeyAt</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span><span class="token punctuation">,</span> cur_internal<span class="token operator">-></span><span class="token function">ValueAt</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="14"></td><td><pre>            left_internal<span class="token operator">-></span><span class="token function">IncreaseSize</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="15"></td><td><pre>          <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="16"></td><td><pre>          <span class="token comment">// delete parent_index</span></pre></td></tr><tr><td data-num="17"></td><td><pre>          <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> parent_index<span class="token punctuation">;</span> i <span class="token operator">&lt;</span> parent_internal<span class="token operator">-></span><span class="token function">GetSize</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="18"></td><td><pre>            parent_internal<span class="token operator">-></span><span class="token function">SetAt</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> parent_internal<span class="token operator">-></span><span class="token function">KeyAt</span><span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> parent_internal<span class="token operator">-></span><span class="token function">ValueAt</span><span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="19"></td><td><pre>          <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="20"></td><td><pre>          parent_internal<span class="token operator">-></span><span class="token function">IncreaseSize</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="21"></td><td><pre>		 <span class="token comment">// release lock</span></pre></td></tr><tr><td data-num="22"></td><td><pre>          cur_guard<span class="token punctuation">.</span><span class="token function">SetDirty</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="23"></td><td><pre>          cur_guard<span class="token punctuation">.</span><span class="token function">Drop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="24"></td><td><pre>          left_guard<span class="token punctuation">.</span><span class="token function">SetDirty</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="25"></td><td><pre>          left_guard<span class="token punctuation">.</span><span class="token function">Drop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="26"></td><td><pre>          cur_guard <span class="token operator">=</span> std<span class="token double-colon punctuation">::</span><span class="token function">move</span><span class="token punctuation">(</span>parent_guard<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="27"></td><td><pre>          cur_internal <span class="token operator">=</span> parent_internal<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="28"></td><td><pre>        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="29"></td><td><pre>        	<span class="token comment">//merge into right</span></pre></td></tr><tr><td data-num="30"></td><td><pre>        	<span class="token comment">//...</span></pre></td></tr><tr><td data-num="31"></td><td><pre>        <span class="token punctuation">&#125;</span></pre></td></tr></table></figure><h1 id="iterator"><a class="markdownIt-Anchor" href="#iterator">#</a> Iterator</h1>
+<p>较为简单，IndexIterator 类中添加的成员变量如下：</p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img3/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-09-10%20101231.png" alt=""></p>
+<p>重载运算符只要沿着叶结点不断向右移动即可，判断一下边界。重载 == 和！= 注意不要自递归了…</p>
+<h1 id="concurrent-index"><a class="markdownIt-Anchor" href="#concurrent-index">#</a> Concurrent Index</h1>
+<p>策略：</p>
+<p>（1）查询时只获取读锁，使用后立即释放</p>
+<p>（2）插入时先乐观插入，查找值只获取读锁，使用后立即释放，到叶结点再获取写锁，若发现结点分裂再悲观插入，一路获取写锁，中途判断某结点一定不会分裂则将其和其祖先的锁全都释放</p>
+<p>（3）删除时先乐观删除，只获取读锁，使用后立即释放，到叶结点再获取写锁，若发现结点融合，再重新插入一遍，此时一直获取写锁，中途同样可以判断会不会融合释放一定数量的锁。</p>
+<h1 id="test"><a class="markdownIt-Anchor" href="#test">#</a> Test</h1>
 
   </div>
 
@@ -168,7 +184,7 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">更新于</span>
-    <time title="修改时间：2023-09-09 21:53:09" itemprop="dateModified" datetime="2023-09-09T21:53:09+08:00">2023-09-09</time>
+    <time title="修改时间：2023-09-10 10:24:30" itemprop="dateModified" datetime="2023-09-10T10:24:30+08:00">2023-09-10</time>
   </span>
 </div>
 
@@ -224,7 +240,7 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
   <div class="panels">
     <div class="inner">
       <div class="contents panel pjax" data-title="文章目录">
-          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#query"><span class="toc-number">1.</span> <span class="toc-text"> Query</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#insert"><span class="toc-number">2.</span> <span class="toc-text"> Insert</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#delete"><span class="toc-number">3.</span> <span class="toc-text"> Delete</span></a></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#query"><span class="toc-number">1.</span> <span class="toc-text"> Query</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#insert"><span class="toc-number">2.</span> <span class="toc-text"> Insert</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#delete"><span class="toc-number">3.</span> <span class="toc-text"> Delete</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#iterator"><span class="toc-number">4.</span> <span class="toc-text"> Iterator</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#concurrent-index"><span class="toc-number">5.</span> <span class="toc-text"> Concurrent Index</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#test"><span class="toc-number">6.</span> <span class="toc-text"> Test</span></a></li></ol>
       </div>
       <div class="related panel pjax" data-title="系列文章">
       </div>
@@ -316,34 +332,7 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2023/05/17/CSAPP_lab2/" title="计算机系统基础lab2">计算机系统基础lab2</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
     <span><a href="/2023/05/11/treearray/" title="算法实践-树状数组">算法实践-树状数组</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2023/05/12/CSAPP_lab1/" title="计算机系统基础lab1">计算机系统基础lab1</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2023/08/26/CMU15445_p1/" title="CMU15-445#project1">CMU15-445#project1</a></span>
   </li>
 
       
@@ -371,6 +360,33 @@ DodoBird's Blog = 呆呆鸟のBlog</title>
 </div>
 
     <span><a href="/2023/05/22/CSAPP_lab3/" title="计算机系统基础lab3">计算机系统基础lab3</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/05/17/CSAPP_lab2/" title="计算机系统基础lab2">计算机系统基础lab2</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/05/12/CSAPP_lab1/" title="计算机系统基础lab1">计算机系统基础lab1</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/08/26/CMU15445_p1/" title="CMU15-445#project1">CMU15-445#project1</a></span>
   </li>
 
   </ul>
