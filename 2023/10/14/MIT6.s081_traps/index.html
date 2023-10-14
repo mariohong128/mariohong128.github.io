@@ -1,0 +1,461 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="dodobird's Blog" href="http://dodobird.top/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="dodobird's Blog" href="http://dodobird.top/atom.xml" />
+<link rel="alternate" type="application/json" title="dodobird's Blog" href="http://dodobird.top/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+
+<link rel="canonical" href="http://dodobird.top/2023/10/14/MIT6.s081_traps/">
+
+
+
+  <title>
+MIT6.s081_pgtbl |
+DodoBird's Blog = dodobird's Blog</title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">MIT6.s081_pgtbl
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="创建时间：2023-10-14 19:18:57">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">发表于</span>
+    <time itemprop="dateCreated datePublished" datetime="2023-10-14T19:18:57+08:00">2023-10-14</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="切换导航栏">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">DodoBird's Blog</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+          <img src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/2056632.jpg">
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">首页</a></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN">
+  <link itemprop="mainEntityOfPage" href="http://dodobird.top/2023/10/14/MIT6.s081_traps/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="dodobird">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="dodobird's Blog">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h1 id="backtrace"><a class="markdownIt-Anchor" href="#backtrace">#</a> Backtrace</h1>
+<p>大意是需要跟踪函数调用轨迹，根据栈的结构：</p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img5/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-10-14%20192246.png" alt=""></p>
+<p>可以得出，用户态函数调用栈从高地址向低地址增长。栈帧指针 fp 向下 8 个字节是返回地址，向下 16 个字节指向调用者的栈。只要顺着调用者的栈不断向下查找就能输出完整的调用轨迹。</p>
+<p>由于每个栈分配一个对齐的页，所以通过判断 fp 在不在当前页范围内就能知道有没有追踪到底。</p>
+<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">void</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">backtrace</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="3"></td><td><pre>    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"backtrace:\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="4"></td><td><pre>    uint64 fp<span class="token operator">=</span><span class="token function">r_fp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="5"></td><td><pre>    uint64 up <span class="token operator">=</span> <span class="token function">PGROUNDUP</span><span class="token punctuation">(</span>fp<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="6"></td><td><pre>    uint64 down <span class="token operator">=</span> <span class="token function">PGROUNDDOWN</span><span class="token punctuation">(</span>fp<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="7"></td><td><pre>    <span class="token keyword">while</span><span class="token punctuation">(</span>fp<span class="token operator">&lt;</span>up <span class="token operator">&amp;&amp;</span> fp<span class="token operator">></span>down<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="8"></td><td><pre>        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%p\n"</span><span class="token punctuation">,</span> <span class="token operator">*</span><span class="token punctuation">(</span><span class="token punctuation">(</span>uint64 <span class="token operator">*</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>fp <span class="token operator">-</span> <span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// return address</span></pre></td></tr><tr><td data-num="9"></td><td><pre>        fp <span class="token operator">=</span> <span class="token operator">*</span><span class="token punctuation">(</span><span class="token punctuation">(</span>uint64 <span class="token operator">*</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>fp <span class="token operator">-</span> <span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//last fp</span></pre></td></tr><tr><td data-num="10"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="11"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><h1 id="alarm"><a class="markdownIt-Anchor" href="#alarm">#</a> Alarm</h1>
+<p>简而言之，要实现一个定时输出 “alarm” 的程序，每隔指定的时钟中断周期就调用一次指定的函数（测试程序为输出 “alarm”）。</p>
+<p>根据 hints，将 alarmtest 加入 makefile，<span class="exturl" data-url="aHR0cDovL3huLS1zaWdhbGFybXNpZ3JldHVybnVzeXMtdTY1OGF5aTk3aTdxYmY5ZWpzdDdpOWlxcnhlbjNjLnBs">相关的函数 sigalarm 和 sigreturn 加入到 usys.pl</span>。</p>
+<figure class="highlight plsql"><figcaption data-lang="PL/SQL"></figcaption><table><tr><td data-num="1"></td><td><pre>entry<span class="token punctuation">(</span><span class="token string">"sigalarm"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="2"></td><td><pre>entry<span class="token punctuation">(</span><span class="token string">"sigreturn"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr></table></figure><p>在 syscall.c 中更新 syscall 调用表：</p>
+<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">static</span> <span class="token function">uint64</span> <span class="token punctuation">(</span><span class="token operator">*</span>syscalls<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="2"></td><td><pre>    <span class="token comment">//...</span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token punctuation">[</span>SYS_sigalarm<span class="token punctuation">]</span>   sys_sigalarm<span class="token punctuation">,</span></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token punctuation">[</span>SYS_sigreturn<span class="token punctuation">]</span>   sys_sigreturn<span class="token punctuation">,</span></pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token punctuation">&#125;</span><span class="token punctuation">;</span></pre></td></tr></table></figure><p>至此，已经可以通过命令行调用 alarmtest 函数。</p>
+<p>接下来为了实现该功能，要在 proc 结构体中新增一些变量，打开 proc.h。</p>
+<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">struct</span> <span class="token class-name">proc</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="2"></td><td><pre>  <span class="token comment">// ...</span></pre></td></tr><tr><td data-num="3"></td><td><pre>  <span class="token comment">//for alarm</span></pre></td></tr><tr><td data-num="4"></td><td><pre>  <span class="token keyword">int</span> ticks<span class="token punctuation">;</span><span class="token comment">// 多少个时钟周期触发</span></pre></td></tr><tr><td data-num="5"></td><td><pre>  <span class="token keyword">int</span> ticks_pass<span class="token punctuation">;</span> <span class="token comment">// 已经经过的时钟周期数</span></pre></td></tr><tr><td data-num="6"></td><td><pre>  uint64 handler<span class="token punctuation">;</span> <span class="token comment">// 要调用的处理函数</span></pre></td></tr><tr><td data-num="7"></td><td><pre>  <span class="token keyword">struct</span> <span class="token class-name">alarm_context</span> alarm_context<span class="token punctuation">;</span> <span class="token comment">// 保存的寄存器</span></pre></td></tr><tr><td data-num="8"></td><td><pre>  <span class="token keyword">int</span> alarm_status<span class="token punctuation">;</span> <span class="token comment">// 当前是否在 alarm 处理中</span></pre></td></tr><tr><td data-num="9"></td><td><pre><span class="token punctuation">&#125;</span><span class="token punctuation">;</span></pre></td></tr></table></figure><p>为了在调用 alarm 之后，能恢复原来的程序，要保存的寄存器如下，保守起见，除了 t 系列寄存器其它都保存了。注意 alarm_context 在 proc 结构体中不要使用指针，否则需要分配空间，较为繁琐，若不分配会 panic: kernel trap。</p>
+<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">struct</span> <span class="token class-name">alarm_context</span><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="2"></td><td><pre>    <span class="token comment">/*  24 */</span> uint64 epc<span class="token punctuation">;</span>           <span class="token comment">// saved user program counter</span></pre></td></tr><tr><td data-num="3"></td><td><pre>    <span class="token comment">/*  40 */</span> uint64 ra<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="4"></td><td><pre>    <span class="token comment">/*  48 */</span> uint64 sp<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="5"></td><td><pre>    <span class="token comment">/*  56 */</span> uint64 gp<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="6"></td><td><pre>    <span class="token comment">/*  64 */</span> uint64 tp<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="7"></td><td><pre>    <span class="token comment">/*  96 */</span> uint64 s0<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="8"></td><td><pre>    <span class="token comment">/* 104 */</span> uint64 s1<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="9"></td><td><pre>    <span class="token comment">/* 112 */</span> uint64 a0<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="10"></td><td><pre>    <span class="token comment">/* 120 */</span> uint64 a1<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="11"></td><td><pre>    <span class="token comment">/* 128 */</span> uint64 a2<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="12"></td><td><pre>    <span class="token comment">/* 136 */</span> uint64 a3<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="13"></td><td><pre>    <span class="token comment">/* 144 */</span> uint64 a4<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="14"></td><td><pre>    <span class="token comment">/* 152 */</span> uint64 a5<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="15"></td><td><pre>    <span class="token comment">/* 160 */</span> uint64 a6<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="16"></td><td><pre>    <span class="token comment">/* 168 */</span> uint64 a7<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="17"></td><td><pre>    <span class="token comment">/* 176 */</span> uint64 s2<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="18"></td><td><pre>    <span class="token comment">/* 184 */</span> uint64 s3<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="19"></td><td><pre>    <span class="token comment">/* 192 */</span> uint64 s4<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="20"></td><td><pre>    <span class="token comment">/* 200 */</span> uint64 s5<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="21"></td><td><pre>    <span class="token comment">/* 208 */</span> uint64 s6<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="22"></td><td><pre>    <span class="token comment">/* 216 */</span> uint64 s7<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="23"></td><td><pre>    <span class="token comment">/* 224 */</span> uint64 s8<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="24"></td><td><pre>    <span class="token comment">/* 232 */</span> uint64 s9<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="25"></td><td><pre>    <span class="token comment">/* 240 */</span> uint64 s10<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="26"></td><td><pre>    <span class="token comment">/* 248 */</span> uint64 s11<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="27"></td><td><pre><span class="token punctuation">&#125;</span><span class="token punctuation">;</span></pre></td></tr></table></figure><p>然后更改 usertrap 函数，在时钟中断中加入处理逻辑。</p>
+<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">void</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">usertrap</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="4"></td><td><pre>  <span class="token comment">// ...</span></pre></td></tr><tr><td data-num="5"></td><td><pre>  <span class="token comment">// give up the CPU if this is a timer interrupt.</span></pre></td></tr><tr><td data-num="6"></td><td><pre>  <span class="token keyword">if</span><span class="token punctuation">(</span>which_dev <span class="token operator">==</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="7"></td><td><pre>      <span class="token keyword">if</span><span class="token punctuation">(</span>p<span class="token operator">-></span>ticks<span class="token operator">></span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="8"></td><td><pre>          p<span class="token operator">-></span>ticks_pass<span class="token operator">++</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="9"></td><td><pre>          <span class="token keyword">if</span><span class="token punctuation">(</span>p<span class="token operator">-></span>ticks_pass<span class="token operator">>=</span>p<span class="token operator">-></span>ticks<span class="token operator">&amp;&amp;</span><span class="token operator">!</span><span class="token punctuation">(</span>p<span class="token operator">-></span>alarm_status<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="10"></td><td><pre>              p<span class="token operator">-></span>alarm_status<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment">// 当前正在处理 alarm, 不响应其它 alarm</span></pre></td></tr><tr><td data-num="11"></td><td><pre>              p<span class="token operator">-></span>ticks_pass<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="12"></td><td><pre>              <span class="token function">alarm_store</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 保存寄存器到当前 proc</span></pre></td></tr><tr><td data-num="13"></td><td><pre>              p<span class="token operator">-></span>trapframe<span class="token operator">-></span>epc<span class="token operator">=</span>p<span class="token operator">-></span>handler<span class="token punctuation">;</span> <span class="token comment">// 指定的处理函数</span></pre></td></tr><tr><td data-num="14"></td><td><pre>          <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="15"></td><td><pre>      <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="16"></td><td><pre>      <span class="token function">yield</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="17"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="18"></td><td><pre>  <span class="token function">usertrapret</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="19"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>alarm_store 就是复制寄存器，无脑。</p>
+<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">void</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">alarm_store</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="4"></td><td><pre>    <span class="token keyword">struct</span> <span class="token class-name">proc</span> <span class="token operator">*</span>p <span class="token operator">=</span> <span class="token function">myproc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="5"></td><td><pre>    p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>epc<span class="token operator">=</span>p<span class="token operator">-></span>trapframe<span class="token operator">-></span>epc<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="6"></td><td><pre>    p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>a0<span class="token operator">=</span>p<span class="token operator">-></span>trapframe<span class="token operator">-></span>a0<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="7"></td><td><pre>    p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>a1<span class="token operator">=</span>p<span class="token operator">-></span>trapframe<span class="token operator">-></span>a1<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="8"></td><td><pre>    p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>a2<span class="token operator">=</span>p<span class="token operator">-></span>trapframe<span class="token operator">-></span>a2<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="9"></td><td><pre>    p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>a3<span class="token operator">=</span>p<span class="token operator">-></span>trapframe<span class="token operator">-></span>a3<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="10"></td><td><pre>    p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>a4<span class="token operator">=</span>p<span class="token operator">-></span>trapframe<span class="token operator">-></span>a4<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="11"></td><td><pre>    p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>a5<span class="token operator">=</span>p<span class="token operator">-></span>trapframe<span class="token operator">-></span>a5<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="12"></td><td><pre>    p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>a6<span class="token operator">=</span>p<span class="token operator">-></span>trapframe<span class="token operator">-></span>a6<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="13"></td><td><pre>    p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>a7<span class="token operator">=</span>p<span class="token operator">-></span>trapframe<span class="token operator">-></span>a7<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="14"></td><td><pre>    p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>sp<span class="token operator">=</span>p<span class="token operator">-></span>trapframe<span class="token operator">-></span>sp<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="15"></td><td><pre>    p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>s0<span class="token operator">=</span>p<span class="token operator">-></span>trapframe<span class="token operator">-></span>s0<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="16"></td><td><pre>    p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>s1<span class="token operator">=</span>p<span class="token operator">-></span>trapframe<span class="token operator">-></span>s1<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="17"></td><td><pre>    p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>s2<span class="token operator">=</span>p<span class="token operator">-></span>trapframe<span class="token operator">-></span>s2<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="18"></td><td><pre>    p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>s3<span class="token operator">=</span>p<span class="token operator">-></span>trapframe<span class="token operator">-></span>s3<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="19"></td><td><pre>    p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>s4<span class="token operator">=</span>p<span class="token operator">-></span>trapframe<span class="token operator">-></span>s4<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="20"></td><td><pre>    p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>s5<span class="token operator">=</span>p<span class="token operator">-></span>trapframe<span class="token operator">-></span>s5<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="21"></td><td><pre>    p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>s6<span class="token operator">=</span>p<span class="token operator">-></span>trapframe<span class="token operator">-></span>s6<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="22"></td><td><pre>    p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>s7<span class="token operator">=</span>p<span class="token operator">-></span>trapframe<span class="token operator">-></span>s7<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="23"></td><td><pre>    p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>s8<span class="token operator">=</span>p<span class="token operator">-></span>trapframe<span class="token operator">-></span>s8<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="24"></td><td><pre>    p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>s9<span class="token operator">=</span>p<span class="token operator">-></span>trapframe<span class="token operator">-></span>s9<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="25"></td><td><pre>    p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>s10<span class="token operator">=</span>p<span class="token operator">-></span>trapframe<span class="token operator">-></span>s10<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="26"></td><td><pre>    p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>s11<span class="token operator">=</span>p<span class="token operator">-></span>trapframe<span class="token operator">-></span>s11<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="27"></td><td><pre>    p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>gp<span class="token operator">=</span>p<span class="token operator">-></span>trapframe<span class="token operator">-></span>gp<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="28"></td><td><pre>    p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>ra<span class="token operator">=</span>p<span class="token operator">-></span>trapframe<span class="token operator">-></span>ra<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="29"></td><td><pre>    p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>tp<span class="token operator">=</span>p<span class="token operator">-></span>trapframe<span class="token operator">-></span>tp<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="30"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>初始化 proc 也要增加一些字段：</p>
+<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">static</span> <span class="token keyword">struct</span> <span class="token class-name">proc</span><span class="token operator">*</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">allocproc</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="4"></td><td><pre> <span class="token comment">//...</span></pre></td></tr><tr><td data-num="5"></td><td><pre>  <span class="token comment">//init alarm</span></pre></td></tr><tr><td data-num="6"></td><td><pre>  <span class="token function">memset</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>p<span class="token operator">-></span>alarm_context<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>p<span class="token operator">-></span>alarm_context<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="7"></td><td><pre>  p<span class="token operator">-></span>ticks<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="8"></td><td><pre>  p<span class="token operator">-></span>alarm_status<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="9"></td><td><pre>  p<span class="token operator">-></span>ticks_pass<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="10"></td><td><pre>  p<span class="token operator">-></span>handler<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="11"></td><td><pre></pre></td></tr><tr><td data-num="12"></td><td><pre>  <span class="token keyword">return</span> p<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="13"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>最后是新增加的两个函数，写在 sysproc.c 中：</p>
+<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre>uint64</pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">sys_sigalarm</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token comment">// 主要为了获取参数</span></pre></td></tr><tr><td data-num="3"></td><td><pre>    <span class="token keyword">int</span> ticks<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="4"></td><td><pre>    uint64 handler<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="5"></td><td><pre>    <span class="token function">argint</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token operator">&amp;</span>ticks<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="6"></td><td><pre>    <span class="token function">argaddr</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">&amp;</span>handler<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="7"></td><td><pre>    <span class="token keyword">struct</span> <span class="token class-name">proc</span><span class="token operator">*</span>p<span class="token operator">=</span><span class="token function">myproc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="8"></td><td><pre>    p<span class="token operator">-></span>ticks<span class="token operator">=</span>ticks<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="9"></td><td><pre>    p<span class="token operator">-></span>handler<span class="token operator">=</span>handler<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="10"></td><td><pre>    p<span class="token operator">-></span>ticks_pass<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="11"></td><td><pre>    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="12"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="13"></td><td><pre></pre></td></tr><tr><td data-num="14"></td><td><pre>uint64</pre></td></tr><tr><td data-num="15"></td><td><pre><span class="token function">sys_sigreturn</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token comment">// 主要为了恢复现场</span></pre></td></tr><tr><td data-num="16"></td><td><pre>    <span class="token keyword">struct</span> <span class="token class-name">proc</span><span class="token operator">*</span>p<span class="token operator">=</span><span class="token function">myproc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="17"></td><td><pre>    p<span class="token operator">-></span>trapframe<span class="token operator">-></span>epc<span class="token operator">=</span>p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>epc<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="18"></td><td><pre>    p<span class="token operator">-></span>trapframe<span class="token operator">-></span>a0<span class="token operator">=</span>p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>a0<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="19"></td><td><pre>    p<span class="token operator">-></span>trapframe<span class="token operator">-></span>a1<span class="token operator">=</span>p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>a1<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="20"></td><td><pre>    p<span class="token operator">-></span>trapframe<span class="token operator">-></span>a2<span class="token operator">=</span>p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>a2<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="21"></td><td><pre>    p<span class="token operator">-></span>trapframe<span class="token operator">-></span>a3<span class="token operator">=</span>p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>a3<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="22"></td><td><pre>    p<span class="token operator">-></span>trapframe<span class="token operator">-></span>a4<span class="token operator">=</span>p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>a4<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="23"></td><td><pre>    p<span class="token operator">-></span>trapframe<span class="token operator">-></span>a5<span class="token operator">=</span>p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>a5<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="24"></td><td><pre>    p<span class="token operator">-></span>trapframe<span class="token operator">-></span>a6<span class="token operator">=</span>p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>a6<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="25"></td><td><pre>    p<span class="token operator">-></span>trapframe<span class="token operator">-></span>a7<span class="token operator">=</span>p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>a7<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="26"></td><td><pre>    p<span class="token operator">-></span>trapframe<span class="token operator">-></span>sp<span class="token operator">=</span>p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>sp<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="27"></td><td><pre>    p<span class="token operator">-></span>trapframe<span class="token operator">-></span>s0<span class="token operator">=</span>p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>s0<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="28"></td><td><pre>    p<span class="token operator">-></span>trapframe<span class="token operator">-></span>s1<span class="token operator">=</span>p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>s1<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="29"></td><td><pre>    p<span class="token operator">-></span>trapframe<span class="token operator">-></span>s2<span class="token operator">=</span>p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>s2<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="30"></td><td><pre>    p<span class="token operator">-></span>trapframe<span class="token operator">-></span>s3<span class="token operator">=</span>p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>s3<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="31"></td><td><pre>    p<span class="token operator">-></span>trapframe<span class="token operator">-></span>s4<span class="token operator">=</span>p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>s4<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="32"></td><td><pre>    p<span class="token operator">-></span>trapframe<span class="token operator">-></span>s5<span class="token operator">=</span>p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>s5<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="33"></td><td><pre>    p<span class="token operator">-></span>trapframe<span class="token operator">-></span>s6<span class="token operator">=</span>p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>s6<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="34"></td><td><pre>    p<span class="token operator">-></span>trapframe<span class="token operator">-></span>s7<span class="token operator">=</span>p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>s7<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="35"></td><td><pre>    p<span class="token operator">-></span>trapframe<span class="token operator">-></span>s8<span class="token operator">=</span>p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>s8<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="36"></td><td><pre>    p<span class="token operator">-></span>trapframe<span class="token operator">-></span>s9<span class="token operator">=</span>p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>s9<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="37"></td><td><pre>    p<span class="token operator">-></span>trapframe<span class="token operator">-></span>s10<span class="token operator">=</span>p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>s10<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="38"></td><td><pre>    p<span class="token operator">-></span>trapframe<span class="token operator">-></span>s11<span class="token operator">=</span>p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>s11<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="39"></td><td><pre>    p<span class="token operator">-></span>trapframe<span class="token operator">-></span>gp<span class="token operator">=</span>p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>gp<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="40"></td><td><pre>    p<span class="token operator">-></span>trapframe<span class="token operator">-></span>ra<span class="token operator">=</span>p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>ra<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="41"></td><td><pre>    p<span class="token operator">-></span>trapframe<span class="token operator">-></span>tp<span class="token operator">=</span>p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>tp<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="42"></td><td><pre>    p<span class="token operator">-></span>alarm_status<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="43"></td><td><pre>    <span class="token keyword">return</span> p<span class="token operator">-></span>alarm_context<span class="token punctuation">.</span>a0<span class="token punctuation">;</span><span class="token comment">// 返回保存的 a0 寄存器，因为之前的返回值放在 a0 中，而其它中断返回值会覆盖 a0</span></pre></td></tr><tr><td data-num="44"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>为什么需要设置 alarm 状态，判断是否在 alarm 中？因为处理中断要花费的时钟周期可能比指定触发间隔更长，为避免无限嵌套中断，需要拒绝执行正在 alarm 状态中收到的 alarm 中断请求。</p>
+
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">更新于</span>
+    <time title="修改时间：2023-10-14 19:51:42" itemprop="dateModified" datetime="2023-10-14T19:51:42+08:00">2023-10-14</time>
+  </span>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>本文作者： </strong>dodobird <i class="ic i-at"><em>@</em></i>dodobird's Blog
+  </li>
+  <li class="link">
+    <strong>本文链接：</strong>
+    <a href="http://dodobird.top/2023/10/14/MIT6.s081_traps/" title="MIT6.s081_pgtbl">http://dodobird.top/2023/10/14/MIT6.s081_traps/</a>
+  </li>
+  <li class="license">
+    <strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2023/10/14/MIT6.s081_pgtbl/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;dodobird-blog.oss-cn-shanghai.aliyuncs.com&#x2F;2056632.jpg" title="MIT6.s081_pgtbl">
+  <span class="type">上一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>MIT6.s081_pgtbl</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="文章目录">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#backtrace"><span class="toc-number">1.</span> <span class="toc-text"> Backtrace</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#alarm"><span class="toc-number">2.</span> <span class="toc-text"> Alarm</span></a></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="系列文章">
+      </div>
+      <div class="overview panel" data-title="站点概览">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="dodobird"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">dodobird</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">11</span>
+        <span class="name">文章</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+      <span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL2RvZG9iaXJkMjMz" title="https:&#x2F;&#x2F;github.com&#x2F;dodobird233"><i class="ic i-github"></i></span>
+      <span class="exturl item twitter" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS8=" title="https:&#x2F;&#x2F;twitter.com&#x2F;"><i class="ic i-twitter"></i></span>
+      <span class="exturl item about" data-url="aHR0cHM6Ly9naXRodWIuY29tL2RvZG9iaXJkMjMz" title="https:&#x2F;&#x2F;github.com&#x2F;dodobird233"><i class="ic i-address-card"></i></span>
+      <span class="exturl item email" data-url="bWFpbHRvOm1hcmlvaG9uZzEyOEBvdXRsb29rLmNvbQ==" title="mailto:mariohong128@outlook.com"><i class="ic i-envelope"></i></span>
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>首页</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/about/" rel="section"><i class="ic i-user"></i>关于</a>
+  </li>
+
+        
+  <li class="item dropdown">
+      <a href="javascript:void(0);"><i class="ic i-feather"></i>文章</a>
+    <ul class="submenu">
+
+        
+  <li class="item">
+    <a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a>
+  </li>
+
+  </ul>
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>随机文章</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/09/23/MIT6.s081_util/" title="MIT6.s081_util">MIT6.s081_util</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/09/20/CMU15445_p3/" title="CMU15-445#project3">CMU15-445#project3</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/05/12/CSAPP_lab1/" title="计算机系统基础lab1">计算机系统基础lab1</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/08/26/CMU15445_p1/" title="CMU15-445#project1">CMU15-445#project1</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/09/09/CMU15445_p2/" title="CMU15-445#project2">CMU15-445#project2</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/10/14/MIT6.s081_pgtbl/" title="MIT6.s081_pgtbl">MIT6.s081_pgtbl</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/05/22/CSAPP_lab3/" title="计算机系统基础lab3">计算机系统基础lab3</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/08/05/gemmini_mlir/" title="gemmini+mlir环境搭建与架构认识">gemmini+mlir环境搭建与架构认识</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/10/14/MIT6.s081_traps/" title="MIT6.s081_pgtbl">MIT6.s081_pgtbl</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/05/11/treearray/" title="算法实践-树状数组">算法实践-树状数组</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>最新评论</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2021 – 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">dodobird @ DodoBird's Blog</span>
+  </div>
+  <div class="powered-by">
+    基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2023/10/14/MIT6.s081_traps/',
+    favicon: {
+      show: "（●´3｀●）やれやれだぜ",
+      hide: "(´Д｀)大変だ！"
+    },
+    search : {
+      placeholder: "文章搜索",
+      empty: "关于 「 ${query} 」，什么也没搜到",
+      stats: "${time} ms 内找到 ${hits} 条结果"
+    },
+    valine: true,fancybox: true,
+    copyright: '复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>
