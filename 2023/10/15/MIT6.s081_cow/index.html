@@ -1,0 +1,454 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="dodobird's Blog" href="http://dodobird.top/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="dodobird's Blog" href="http://dodobird.top/atom.xml" />
+<link rel="alternate" type="application/json" title="dodobird's Blog" href="http://dodobird.top/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+
+<link rel="canonical" href="http://dodobird.top/2023/10/15/MIT6.s081_cow/">
+
+
+
+  <title>
+MIT6.s081_cow |
+DodoBird's Blog = dodobird's Blog</title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">MIT6.s081_cow
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="创建时间：2023-10-15 16:05:12">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">发表于</span>
+    <time itemprop="dateCreated datePublished" datetime="2023-10-15T16:05:12+08:00">2023-10-15</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="切换导航栏">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">DodoBird's Blog</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+          <img src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img5/v2-0142a43e2435804c9fd7746d14605e64_1440w.webp">
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">首页</a></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN">
+  <link itemprop="mainEntityOfPage" href="http://dodobird.top/2023/10/15/MIT6.s081_cow/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="dodobird">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="dodobird's Blog">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h1 id="implement-copy-on-write-fork"><a class="markdownIt-Anchor" href="#implement-copy-on-write-fork">#</a> Implement copy-on-write fork</h1>
+<p>大意是子进程和父进程共享物理内存，只有需要对共享页写操作时再分配新的自己的物理页。</p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img5/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-10-15%20160443.png" alt=""></p>
+<p>根据提示，为了区分当前页面是否是 copy-on-write 页面，在 riscv.h 中设置 PTE 保留的第 8 位作为标志。</p>
+<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">PTE_C</span> <span class="token expression"><span class="token punctuation">(</span><span class="token number">1L</span> <span class="token operator">&lt;&lt;</span> <span class="token number">8</span><span class="token punctuation">)</span> </span><span class="token comment">// copy-on-write</span></span></pre></td></tr></table></figure><p>修改 kalloc.c 如下：</p>
+<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">int</span> ref<span class="token punctuation">[</span>PHYSTOP<span class="token operator">/</span>PGSIZE<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">// 物理页面的引用计数</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token comment">//...</span></pre></td></tr><tr><td data-num="3"></td><td><pre></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token keyword">void</span></pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token function">freerange</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>pa_start<span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span>pa_end<span class="token punctuation">)</span><span class="token comment">// 分配时初始化</span></pre></td></tr><tr><td data-num="6"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="7"></td><td><pre>  <span class="token keyword">char</span> <span class="token operator">*</span>p<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="8"></td><td><pre>  p <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">PGROUNDUP</span><span class="token punctuation">(</span><span class="token punctuation">(</span>uint64<span class="token punctuation">)</span>pa_start<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="9"></td><td><pre>  <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token punctuation">;</span> p <span class="token operator">+</span> PGSIZE <span class="token operator">&lt;=</span> <span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span>pa_end<span class="token punctuation">;</span> p <span class="token operator">+=</span> PGSIZE<span class="token punctuation">)</span><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="10"></td><td><pre>      ref<span class="token punctuation">[</span><span class="token punctuation">(</span>uint64<span class="token punctuation">)</span>p<span class="token operator">/</span>PGSIZE<span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span><span class="token comment">// 初始的引用计数为 1</span></pre></td></tr><tr><td data-num="11"></td><td><pre>      <span class="token function">kfree</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="12"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="13"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="14"></td><td><pre></pre></td></tr><tr><td data-num="15"></td><td><pre><span class="token comment">// Free the page of physical memory pointed at by pa,</span></pre></td></tr><tr><td data-num="16"></td><td><pre><span class="token comment">// which normally should have been returned by a</span></pre></td></tr><tr><td data-num="17"></td><td><pre><span class="token comment">// call to kalloc().  (The exception is when</span></pre></td></tr><tr><td data-num="18"></td><td><pre><span class="token comment">// initializing the allocator; see kinit above.)</span></pre></td></tr><tr><td data-num="19"></td><td><pre><span class="token keyword">void</span></pre></td></tr><tr><td data-num="20"></td><td><pre><span class="token function">kfree</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>pa<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="21"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="22"></td><td><pre>  <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span>uint64<span class="token punctuation">)</span>pa <span class="token operator">%</span> PGSIZE<span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">0</span> <span class="token operator">||</span> <span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span>pa <span class="token operator">&lt;</span> end <span class="token operator">||</span> <span class="token punctuation">(</span>uint64<span class="token punctuation">)</span>pa <span class="token operator">>=</span> PHYSTOP<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="23"></td><td><pre>    <span class="token function">panic</span><span class="token punctuation">(</span><span class="token string">"kfree"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="24"></td><td><pre>  <span class="token function">acquire</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>kmem<span class="token punctuation">.</span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="25"></td><td><pre>  <span class="token keyword">int</span> remain<span class="token operator">=</span><span class="token operator">--</span>ref<span class="token punctuation">[</span><span class="token punctuation">(</span>uint64<span class="token punctuation">)</span>pa<span class="token operator">/</span>PGSIZE<span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">// 引用计数 - 1</span></pre></td></tr><tr><td data-num="26"></td><td><pre>  <span class="token function">release</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>kmem<span class="token punctuation">.</span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="27"></td><td><pre>  <span class="token keyword">if</span><span class="token punctuation">(</span>remain<span class="token operator">></span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token comment">// 仍然有进程在使用该物理页，不释放</span></pre></td></tr><tr><td data-num="28"></td><td><pre>     <span class="token keyword">return</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="29"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="30"></td><td><pre>  <span class="token comment">// 释放页面</span></pre></td></tr><tr><td data-num="31"></td><td><pre>  <span class="token keyword">struct</span> <span class="token class-name">run</span> <span class="token operator">*</span>r<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="32"></td><td><pre>  <span class="token comment">// Fill with junk to catch dangling refs.</span></pre></td></tr><tr><td data-num="33"></td><td><pre>  <span class="token function">memset</span><span class="token punctuation">(</span>pa<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> PGSIZE<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="34"></td><td><pre>  r <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">run</span><span class="token operator">*</span><span class="token punctuation">)</span>pa<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="35"></td><td><pre>  <span class="token function">acquire</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>kmem<span class="token punctuation">.</span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="36"></td><td><pre>  r<span class="token operator">-></span>next <span class="token operator">=</span> kmem<span class="token punctuation">.</span>freelist<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="37"></td><td><pre>  kmem<span class="token punctuation">.</span>freelist <span class="token operator">=</span> r<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="38"></td><td><pre>  <span class="token function">release</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>kmem<span class="token punctuation">.</span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="39"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="40"></td><td><pre></pre></td></tr><tr><td data-num="41"></td><td><pre><span class="token comment">// Allocate one 4096-byte page of physical memory.</span></pre></td></tr><tr><td data-num="42"></td><td><pre><span class="token comment">// Returns a pointer that the kernel can use.</span></pre></td></tr><tr><td data-num="43"></td><td><pre><span class="token comment">// Returns 0 if the memory cannot be allocated.</span></pre></td></tr><tr><td data-num="44"></td><td><pre><span class="token keyword">void</span> <span class="token operator">*</span></pre></td></tr><tr><td data-num="45"></td><td><pre><span class="token function">kalloc</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token comment">// 分配页面</span></pre></td></tr><tr><td data-num="46"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="47"></td><td><pre>  <span class="token keyword">struct</span> <span class="token class-name">run</span> <span class="token operator">*</span>r<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="48"></td><td><pre>  <span class="token function">acquire</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>kmem<span class="token punctuation">.</span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="49"></td><td><pre>  r <span class="token operator">=</span> kmem<span class="token punctuation">.</span>freelist<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="50"></td><td><pre>  <span class="token keyword">if</span><span class="token punctuation">(</span>r<span class="token punctuation">)</span><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="51"></td><td><pre>    kmem<span class="token punctuation">.</span>freelist <span class="token operator">=</span> r<span class="token operator">-></span>next<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="52"></td><td><pre>    <span class="token keyword">if</span><span class="token punctuation">(</span>ref<span class="token punctuation">[</span><span class="token punctuation">(</span>uint64<span class="token punctuation">)</span>r<span class="token operator">/</span>PGSIZE<span class="token punctuation">]</span><span class="token operator">!=</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token function">panic</span><span class="token punctuation">(</span><span class="token string">"kalloc: ref count"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 未分配时引用计数必为 0</span></pre></td></tr><tr><td data-num="53"></td><td><pre>    ref<span class="token punctuation">[</span><span class="token punctuation">(</span>uint64<span class="token punctuation">)</span>r<span class="token operator">/</span>PGSIZE<span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span><span class="token comment">// 初始计数为 1</span></pre></td></tr><tr><td data-num="54"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="55"></td><td><pre>  <span class="token function">release</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>kmem<span class="token punctuation">.</span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="56"></td><td><pre>  <span class="token keyword">if</span><span class="token punctuation">(</span>r<span class="token punctuation">)</span><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="57"></td><td><pre>      <span class="token function">memset</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span>r<span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> PGSIZE<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// fill with junk</span></pre></td></tr><tr><td data-num="58"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="59"></td><td><pre>  <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">)</span>r<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="60"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="61"></td><td><pre></pre></td></tr><tr><td data-num="62"></td><td><pre><span class="token keyword">void</span> <span class="token function">ref_increase</span><span class="token punctuation">(</span>uint64 pa<span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token comment">// 使引用计数 + 1 的函数</span></pre></td></tr><tr><td data-num="63"></td><td><pre>    <span class="token function">acquire</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>kmem<span class="token punctuation">.</span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="64"></td><td><pre>    <span class="token keyword">if</span><span class="token punctuation">(</span>pa<span class="token operator">%</span>PGSIZE<span class="token operator">!=</span><span class="token number">0</span><span class="token operator">||</span>pa<span class="token operator">>=</span>PHYSTOP<span class="token operator">||</span>ref<span class="token punctuation">[</span>pa<span class="token operator">/</span>PGSIZE<span class="token punctuation">]</span><span class="token operator">&lt;</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token function">panic</span><span class="token punctuation">(</span><span class="token string">"ref increase err"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="65"></td><td><pre>    ref<span class="token punctuation">[</span>pa<span class="token operator">/</span>PGSIZE<span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="66"></td><td><pre>    <span class="token function">release</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>kmem<span class="token punctuation">.</span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="67"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>在 trap.c 中修改如下：</p>
+<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token comment">// handle an interrupt, exception, or system call from user space.</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token comment">// called from trampoline.S</span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token comment">//</span></pre></td></tr><tr><td data-num="4"></td><td><pre><span class="token keyword">void</span></pre></td></tr><tr><td data-num="5"></td><td><pre><span class="token function">usertrap</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="6"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="7"></td><td><pre>  <span class="token comment">// ...</span></pre></td></tr><tr><td data-num="8"></td><td><pre>  <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">r_scause</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="9"></td><td><pre>    <span class="token comment">// system call</span></pre></td></tr><tr><td data-num="10"></td><td><pre>	<span class="token comment">// ...</span></pre></td></tr><tr><td data-num="11"></td><td><pre>  <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">r_scause</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">15</span><span class="token operator">||</span><span class="token function">r_scause</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">==</span><span class="token number">13</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token comment">//13 和 15 都是 page fault</span></pre></td></tr><tr><td data-num="12"></td><td><pre>      <span class="token comment">//page fault</span></pre></td></tr><tr><td data-num="13"></td><td><pre>      uint64 va<span class="token operator">=</span><span class="token function">r_stval</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="14"></td><td><pre>      <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">cow_pagefault</span><span class="token punctuation">(</span>p<span class="token operator">-></span>pagetable<span class="token punctuation">,</span>va<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token comment">//copy-on-write 处理失败</span></pre></td></tr><tr><td data-num="15"></td><td><pre>          <span class="token function">setkilled</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 杀死进程</span></pre></td></tr><tr><td data-num="16"></td><td><pre>      <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="17"></td><td><pre>  <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span>which_dev <span class="token operator">=</span> <span class="token function">devintr</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="18"></td><td><pre>    <span class="token comment">// ok</span></pre></td></tr><tr><td data-num="19"></td><td><pre>  <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="20"></td><td><pre>    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"usertrap(): unexpected scause %p pid=%d\n"</span><span class="token punctuation">,</span> <span class="token function">r_scause</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> p<span class="token operator">-></span>pid<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="21"></td><td><pre>    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"            sepc=%p stval=%p\n"</span><span class="token punctuation">,</span> <span class="token function">r_sepc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">r_stval</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="22"></td><td><pre>    <span class="token function">setkilled</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="23"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="24"></td><td><pre>  <span class="token comment">// ...</span></pre></td></tr><tr><td data-num="25"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><p>vm.c 修改如下：</p>
+<figure class="highlight c"><figcaption data-lang="c"></figcaption><table><tr><td data-num="1"></td><td><pre><span class="token keyword">int</span></pre></td></tr><tr><td data-num="2"></td><td><pre><span class="token function">uvmcopy</span><span class="token punctuation">(</span><span class="token class-name">pagetable_t</span> old<span class="token punctuation">,</span> <span class="token class-name">pagetable_t</span> new<span class="token punctuation">,</span> uint64 sz<span class="token punctuation">)</span><span class="token comment">// 映射到同一个物理页面</span></pre></td></tr><tr><td data-num="3"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="4"></td><td><pre>  <span class="token class-name">pte_t</span> <span class="token operator">*</span>pte<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="5"></td><td><pre>  uint64 pa<span class="token punctuation">,</span> i<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="6"></td><td><pre>  uint flags<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="7"></td><td><pre></pre></td></tr><tr><td data-num="8"></td><td><pre>  <span class="token keyword">for</span><span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> sz<span class="token punctuation">;</span> i <span class="token operator">+=</span> PGSIZE<span class="token punctuation">)</span><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="9"></td><td><pre>    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span>pte <span class="token operator">=</span> <span class="token function">walk</span><span class="token punctuation">(</span>old<span class="token punctuation">,</span> i<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="10"></td><td><pre>      <span class="token function">panic</span><span class="token punctuation">(</span><span class="token string">"uvmcopy: pte should exist"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="11"></td><td><pre>    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token operator">*</span>pte <span class="token operator">&amp;</span> PTE_V<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span></pre></td></tr><tr><td data-num="12"></td><td><pre>      <span class="token function">panic</span><span class="token punctuation">(</span><span class="token string">"uvmcopy: page not present"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="13"></td><td><pre>    pa <span class="token operator">=</span> <span class="token function">PTE2PA</span><span class="token punctuation">(</span><span class="token operator">*</span>pte<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="14"></td><td><pre>    flags <span class="token operator">=</span> <span class="token function">PTE_FLAGS</span><span class="token punctuation">(</span><span class="token operator">*</span>pte<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 获取当前页面标志位</span></pre></td></tr><tr><td data-num="15"></td><td><pre>    <span class="token keyword">if</span><span class="token punctuation">(</span>flags<span class="token operator">&amp;</span>PTE_W<span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token comment">// 有写标志，说明不是 copy-on-write 页</span></pre></td></tr><tr><td data-num="16"></td><td><pre>      flags <span class="token operator">&amp;=</span> <span class="token operator">~</span>PTE_W<span class="token punctuation">;</span><span class="token comment">// 取消写标志</span></pre></td></tr><tr><td data-num="17"></td><td><pre>      flags <span class="token operator">|=</span> PTE_C<span class="token punctuation">;</span><span class="token comment">//copy-on-write 标志</span></pre></td></tr><tr><td data-num="18"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="19"></td><td><pre>    flags <span class="token operator">|=</span> PTE_R<span class="token punctuation">;</span><span class="token comment">// 设置可读</span></pre></td></tr><tr><td data-num="20"></td><td><pre>    <span class="token operator">*</span>pte <span class="token operator">=</span> <span class="token function">PA2PTE</span><span class="token punctuation">(</span>pa<span class="token punctuation">)</span><span class="token operator">|</span>flags<span class="token punctuation">;</span><span class="token comment">//pte 标志设置为 flags</span></pre></td></tr><tr><td data-num="21"></td><td><pre>    <span class="token function">mappages</span><span class="token punctuation">(</span>new<span class="token punctuation">,</span> i<span class="token punctuation">,</span> PGSIZE<span class="token punctuation">,</span> pa<span class="token punctuation">,</span> flags<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 将新页映射到同一个物理地址 pa</span></pre></td></tr><tr><td data-num="22"></td><td><pre>    <span class="token function">ref_increase</span><span class="token punctuation">(</span>pa<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 引用计数 + 1</span></pre></td></tr><tr><td data-num="23"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="24"></td><td><pre>  <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="25"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="26"></td><td><pre></pre></td></tr><tr><td data-num="27"></td><td><pre><span class="token comment">// Copy from kernel to user.</span></pre></td></tr><tr><td data-num="28"></td><td><pre><span class="token comment">// Copy len bytes from src to virtual address dstva in a given page table.</span></pre></td></tr><tr><td data-num="29"></td><td><pre><span class="token comment">// Return 0 on success, -1 on error.</span></pre></td></tr><tr><td data-num="30"></td><td><pre><span class="token keyword">int</span></pre></td></tr><tr><td data-num="31"></td><td><pre><span class="token function">copyout</span><span class="token punctuation">(</span><span class="token class-name">pagetable_t</span> pagetable<span class="token punctuation">,</span> uint64 dstva<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>src<span class="token punctuation">,</span> uint64 len<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="32"></td><td><pre><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="33"></td><td><pre>  uint64 n<span class="token punctuation">,</span> va0<span class="token punctuation">,</span> pa0<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="34"></td><td><pre>  <span class="token class-name">pte_t</span> <span class="token operator">*</span>pte<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="35"></td><td><pre></pre></td></tr><tr><td data-num="36"></td><td><pre>  <span class="token keyword">while</span><span class="token punctuation">(</span>len <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="37"></td><td><pre>    va0 <span class="token operator">=</span> <span class="token function">PGROUNDDOWN</span><span class="token punctuation">(</span>dstva<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="38"></td><td><pre>    <span class="token keyword">if</span><span class="token punctuation">(</span>va0 <span class="token operator">>=</span> MAXVA<span class="token punctuation">)</span><span class="token comment">// 越界</span></pre></td></tr><tr><td data-num="39"></td><td><pre>      <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="40"></td><td><pre>    pte <span class="token operator">=</span> <span class="token function">walk</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">,</span> va0<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="41"></td><td><pre>    <span class="token keyword">if</span><span class="token punctuation">(</span>pte <span class="token operator">==</span> <span class="token number">0</span> <span class="token operator">||</span> <span class="token punctuation">(</span><span class="token operator">*</span>pte <span class="token operator">&amp;</span> PTE_V<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span> <span class="token operator">||</span> <span class="token punctuation">(</span><span class="token operator">*</span>pte <span class="token operator">&amp;</span> PTE_U<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token comment">// 无效页或者用户不能访问的页</span></pre></td></tr><tr><td data-num="42"></td><td><pre>      <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="43"></td><td><pre>    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token operator">*</span>pte <span class="token operator">&amp;</span> PTE_W<span class="token punctuation">)</span><span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token comment">// 无写标志，可能是 copy-on-write 页导致的只读</span></pre></td></tr><tr><td data-num="44"></td><td><pre>        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">cow_pagefault</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">,</span>va0<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="45"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="46"></td><td><pre>    <span class="token comment">// 有写标志，直接拷贝</span></pre></td></tr><tr><td data-num="47"></td><td><pre>    pa0 <span class="token operator">=</span> <span class="token function">PTE2PA</span><span class="token punctuation">(</span><span class="token operator">*</span>pte<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="48"></td><td><pre>    n <span class="token operator">=</span> PGSIZE <span class="token operator">-</span> <span class="token punctuation">(</span>dstva <span class="token operator">-</span> va0<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="49"></td><td><pre>    <span class="token keyword">if</span><span class="token punctuation">(</span>n <span class="token operator">></span> len<span class="token punctuation">)</span></pre></td></tr><tr><td data-num="50"></td><td><pre>      n <span class="token operator">=</span> len<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="51"></td><td><pre>    <span class="token function">memmove</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span>pa0 <span class="token operator">+</span> <span class="token punctuation">(</span>dstva <span class="token operator">-</span> va0<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> src<span class="token punctuation">,</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="52"></td><td><pre></pre></td></tr><tr><td data-num="53"></td><td><pre>    len <span class="token operator">-=</span> n<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="54"></td><td><pre>    src <span class="token operator">+=</span> n<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="55"></td><td><pre>    dstva <span class="token operator">=</span> va0 <span class="token operator">+</span> PGSIZE<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="56"></td><td><pre>  <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="57"></td><td><pre>  <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="58"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="59"></td><td><pre></pre></td></tr><tr><td data-num="60"></td><td><pre><span class="token keyword">int</span> <span class="token function">cow_pagefault</span><span class="token punctuation">(</span><span class="token class-name">pagetable_t</span> pagetable<span class="token punctuation">,</span>uint64 va<span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token comment">// 处理对 copy-on-write 页的写操作</span></pre></td></tr><tr><td data-num="61"></td><td><pre>    <span class="token keyword">if</span><span class="token punctuation">(</span>va<span class="token operator">>=</span>MAXVA<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span><span class="token comment">// 越界</span></pre></td></tr><tr><td data-num="62"></td><td><pre>    <span class="token class-name">pte_t</span> <span class="token operator">*</span>pte<span class="token punctuation">;</span></pre></td></tr><tr><td data-num="63"></td><td><pre>    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span>pte<span class="token operator">=</span><span class="token function">walk</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">,</span>va<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token comment">// 无效 va</span></pre></td></tr><tr><td data-num="64"></td><td><pre>        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="65"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="66"></td><td><pre>    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span><span class="token operator">*</span>pte<span class="token operator">&amp;</span>PTE_V<span class="token punctuation">)</span><span class="token operator">||</span><span class="token operator">!</span><span class="token punctuation">(</span><span class="token operator">*</span>pte<span class="token operator">&amp;</span>PTE_C<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token comment">// 无效页或者不属于 copy-on-write 页</span></pre></td></tr><tr><td data-num="67"></td><td><pre>        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="68"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="69"></td><td><pre>    va <span class="token operator">=</span> <span class="token function">PGROUNDDOWN</span><span class="token punctuation">(</span>va<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="70"></td><td><pre>    <span class="token keyword">char</span><span class="token operator">*</span>mem<span class="token operator">=</span><span class="token function">kalloc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 分配一个物理页</span></pre></td></tr><tr><td data-num="71"></td><td><pre>    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>mem<span class="token punctuation">)</span><span class="token punctuation">&#123;</span></pre></td></tr><tr><td data-num="72"></td><td><pre>        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="73"></td><td><pre>    <span class="token punctuation">&#125;</span></pre></td></tr><tr><td data-num="74"></td><td><pre>    uint64 pa <span class="token operator">=</span> <span class="token function">PTE2PA</span><span class="token punctuation">(</span><span class="token operator">*</span>pte<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="75"></td><td><pre>    <span class="token function">memmove</span><span class="token punctuation">(</span>mem<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span>pa<span class="token punctuation">,</span> PGSIZE<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 复制到新页</span></pre></td></tr><tr><td data-num="76"></td><td><pre>    uint flags <span class="token operator">=</span> <span class="token function">PTE_FLAGS</span><span class="token punctuation">(</span><span class="token operator">*</span>pte<span class="token punctuation">)</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="77"></td><td><pre>    <span class="token operator">*</span>pte <span class="token operator">=</span> <span class="token function">PA2PTE</span><span class="token punctuation">(</span><span class="token punctuation">(</span>uint64<span class="token punctuation">)</span>mem<span class="token punctuation">)</span> <span class="token operator">|</span> flags<span class="token punctuation">;</span><span class="token comment">// 复制旧页的标志位到新页</span></pre></td></tr><tr><td data-num="78"></td><td><pre>    <span class="token operator">*</span>pte <span class="token operator">|=</span> PTE_W<span class="token punctuation">;</span><span class="token comment">// 新页可写</span></pre></td></tr><tr><td data-num="79"></td><td><pre>    <span class="token operator">*</span>pte <span class="token operator">&amp;=</span> <span class="token operator">~</span>PTE_C<span class="token punctuation">;</span><span class="token comment">// 新页取消 copy-on-write 标志</span></pre></td></tr><tr><td data-num="80"></td><td><pre>    <span class="token function">kfree</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">)</span>pa<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 源页引用计数 - 1</span></pre></td></tr><tr><td data-num="81"></td><td><pre>    <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span></pre></td></tr><tr><td data-num="82"></td><td><pre><span class="token punctuation">&#125;</span></pre></td></tr></table></figure><h1 id="test"><a class="markdownIt-Anchor" href="#test">#</a> Test</h1>
+<p>一开始没有注意到 scause=13 也是 page fault，导致 usertest 部分一直卡住无输出，查看日志才知道有大量 unexcepted scause。</p>
+<p><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img5/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202023-10-15%20155932.png" alt=""></p>
+
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">更新于</span>
+    <time title="修改时间：2023-10-15 16:59:55" itemprop="dateModified" datetime="2023-10-15T16:59:55+08:00">2023-10-15</time>
+  </span>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>本文作者： </strong>dodobird <i class="ic i-at"><em>@</em></i>dodobird's Blog
+  </li>
+  <li class="link">
+    <strong>本文链接：</strong>
+    <a href="http://dodobird.top/2023/10/15/MIT6.s081_cow/" title="MIT6.s081_cow">http://dodobird.top/2023/10/15/MIT6.s081_cow/</a>
+  </li>
+  <li class="license">
+    <strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2023/10/14/MIT6.s081_traps/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;dodobird-blog.oss-cn-shanghai.aliyuncs.com&#x2F;img5&#x2F;v2-0142a43e2435804c9fd7746d14605e64_1440w.webp" title="MIT6.s081_traps">
+  <span class="type">上一篇</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>MIT6.s081_traps</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="文章目录">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#implement-copy-on-write-fork"><span class="toc-number">1.</span> <span class="toc-text"> Implement copy-on-write fork</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#test"><span class="toc-number">2.</span> <span class="toc-text"> Test</span></a></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="系列文章">
+      </div>
+      <div class="overview panel" data-title="站点概览">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="dodobird"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">dodobird</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">12</span>
+        <span class="name">文章</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+      <span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL2RvZG9iaXJkMjMz" title="https:&#x2F;&#x2F;github.com&#x2F;dodobird233"><i class="ic i-github"></i></span>
+      <span class="exturl item twitter" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS8=" title="https:&#x2F;&#x2F;twitter.com&#x2F;"><i class="ic i-twitter"></i></span>
+      <span class="exturl item about" data-url="aHR0cHM6Ly9naXRodWIuY29tL2RvZG9iaXJkMjMz" title="https:&#x2F;&#x2F;github.com&#x2F;dodobird233"><i class="ic i-address-card"></i></span>
+      <span class="exturl item email" data-url="bWFpbHRvOm1hcmlvaG9uZzEyOEBvdXRsb29rLmNvbQ==" title="mailto:mariohong128@outlook.com"><i class="ic i-envelope"></i></span>
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>首页</a>
+  </li>
+
+    
+  <li class="item">
+    <a href="/about/" rel="section"><i class="ic i-user"></i>关于</a>
+  </li>
+
+        
+  <li class="item dropdown">
+      <a href="javascript:void(0);"><i class="ic i-feather"></i>文章</a>
+    <ul class="submenu">
+
+        
+  <li class="item">
+    <a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a>
+  </li>
+
+  </ul>
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>随机文章</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/09/20/CMU15445_p3/" title="CMU15-445#project3">CMU15-445#project3</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/05/12/CSAPP_lab1/" title="计算机系统基础lab1">计算机系统基础lab1</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/09/23/MIT6.s081_util/" title="MIT6.s081_util">MIT6.s081_util</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/05/11/treearray/" title="算法实践-树状数组">算法实践-树状数组</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/10/14/MIT6.s081_pgtbl/" title="MIT6.s081_pgtbl">MIT6.s081_pgtbl</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/09/09/CMU15445_p2/" title="CMU15-445#project2">CMU15-445#project2</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/05/22/CSAPP_lab3/" title="计算机系统基础lab3">计算机系统基础lab3</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/05/17/CSAPP_lab2/" title="计算机系统基础lab2">计算机系统基础lab2</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/08/26/CMU15445_p1/" title="CMU15-445#project1">CMU15-445#project1</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2023/08/05/gemmini_mlir/" title="gemmini+mlir环境搭建与架构认识">gemmini+mlir环境搭建与架构认识</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>最新评论</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2021 – 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">dodobird @ DodoBird's Blog</span>
+  </div>
+  <div class="powered-by">
+    基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2023/10/15/MIT6.s081_cow/',
+    favicon: {
+      show: "（●´3｀●）やれやれだぜ",
+      hide: "(´Д｀)大変だ！"
+    },
+    search : {
+      placeholder: "文章搜索",
+      empty: "关于 「 ${query} 」，什么也没搜到",
+      stats: "${time} ms 内找到 ${hits} 条结果"
+    },
+    valine: true,fancybox: true,
+    copyright: '复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>
