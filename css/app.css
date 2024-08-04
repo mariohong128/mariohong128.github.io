@@ -771,10 +771,8 @@ body.loaded::-webkit-scrollbar-thumb {
 .page .body h3 .anchor::before {
   animation: flash 6s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
 }
-.shake,
-.ribbon a:hover,
-.overview .author:hover .image {
-  animation: shake 1s;
+.shake {
+  animation: shake 0s;
 }
 .fade-in,
 .tip,
