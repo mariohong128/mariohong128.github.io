@@ -120,129 +120,20 @@
         
 <article class="item">
   <div class="cover">
-    <a href="/2025/01/12/MIT6.s081_util/" itemprop="url" title="MIT6.s081_util"><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img5/v2-0142a43e2435804c9fd7746d14605e64_1440w.webp"></a>
+    <a href="/2023/10/19/MIT6.s081_cow/" itemprop="url" title="MIT6.s081_cow"><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img5/v2-0142a43e2435804c9fd7746d14605e64_1440w.webp"></a>
   </div>
   <div class="info">
     
 <div class="meta">
-  <span class="item" title="创建时间：2025-01-12 02:32:31">
+  <span class="item" title="创建时间：2023-10-19 15:10:46">
     <span class="icon">
       <i class="ic i-calendar"></i>
     </span>
-    <time itemprop="dateCreated datePublished" datetime="2025-01-12T02:32:31+08:00">2025-01-12</time>
+    <time itemprop="dateCreated datePublished" datetime="2023-10-19T15:10:46+08:00">2023-10-19</time>
   </span>
 </div>
 
-    <h3><a href="/2025/01/12/MIT6.s081_util/" itemprop="url" title="MIT6.s081_util">MIT6.s081_util</a></h3>
-    <div class="excerpt">
-        # sleep
-Implement a user-level sleep program for xv6, along the lines of the UNIX sleep command. Your sleep should pause for a user-specified number of ticks. A tick is a notion of time defined by the xv6 kernel, namely the time between two interrupts from the timer chip. Your solution should be in...
-    </div>
-    <a href="/2025/01/12/MIT6.s081_util/" itemprop="url" title="MIT6.s081_util" class="btn">more...</a>
-  </div>
-</article>
-
-        
-<article class="item">
-  <div class="cover">
-    <a href="/2025/01/12/MIT6.s081_traps/" itemprop="url" title="MIT6.s081_traps"><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img5/v2-0142a43e2435804c9fd7746d14605e64_1440w.webp"></a>
-  </div>
-  <div class="info">
-    
-<div class="meta">
-  <span class="item" title="创建时间：2025-01-12 02:32:31">
-    <span class="icon">
-      <i class="ic i-calendar"></i>
-    </span>
-    <time itemprop="dateCreated datePublished" datetime="2025-01-12T02:32:31+08:00">2025-01-12</time>
-  </span>
-</div>
-
-    <h3><a href="/2025/01/12/MIT6.s081_traps/" itemprop="url" title="MIT6.s081_traps">MIT6.s081_traps</a></h3>
-    <div class="excerpt">
-        # Backtrace
-大意是需要跟踪函数调用轨迹，根据栈的结构：
-
-可以得出，用户态函数调用栈从高地址向低地址增长。栈帧指针 fp 向下 8 个字节是返回地址，向下 16 个字节指向调用者的栈。只要顺着调用者的栈不断向下查找就能输出完整的调用轨迹。
-由于每个栈分配一个对齐的页，所以通过判断 fp 在不在当前页范围内就能知道有没有追踪到底。
-voidbacktrace(void)&amp;#123; printf(&quot;backtrace:&#92;n&quot;); uint64 fp=r_fp(); uint64 up = PGROUNDUP(fp); uint64 down =...
-    </div>
-    <a href="/2025/01/12/MIT6.s081_traps/" itemprop="url" title="MIT6.s081_traps" class="btn">more...</a>
-  </div>
-</article>
-
-        
-<article class="item">
-  <div class="cover">
-    <a href="/2025/01/12/MIT6.s081_pgtbl/" itemprop="url" title="MIT6.s081_pgtbl"><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img5/v2-0142a43e2435804c9fd7746d14605e64_1440w.webp"></a>
-  </div>
-  <div class="info">
-    
-<div class="meta">
-  <span class="item" title="创建时间：2025-01-12 02:32:31">
-    <span class="icon">
-      <i class="ic i-calendar"></i>
-    </span>
-    <time itemprop="dateCreated datePublished" datetime="2025-01-12T02:32:31+08:00">2025-01-12</time>
-  </span>
-</div>
-
-    <h3><a href="/2025/01/12/MIT6.s081_pgtbl/" itemprop="url" title="MIT6.s081_pgtbl">MIT6.s081_pgtbl</a></h3>
-    <div class="excerpt">
-        # Speed up system calls
-将常用的系统数据保存在用户空间的页表中，这样就不用每次使用系统调用来获取了。lab 中已经定义好了 USYSCALL 的宏和结构体，内容就是一个 pid，可以直接拿来用。
-仿照 trapframe 的分配方法，将 usyscall 分配一下：
-static struct proc*allocproc(void)&amp;#123; // ... // Allocate a trapframe page. if((p-&gt;trapframe = (struct trapframe *)kalloc()) == 0)&amp;#123;...
-    </div>
-    <a href="/2025/01/12/MIT6.s081_pgtbl/" itemprop="url" title="MIT6.s081_pgtbl" class="btn">more...</a>
-  </div>
-</article>
-
-        
-<article class="item">
-  <div class="cover">
-    <a href="/2025/01/12/MIT6.s081_fs/" itemprop="url" title="MIT6.s081_fs"><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img5/v2-0142a43e2435804c9fd7746d14605e64_1440w.webp"></a>
-  </div>
-  <div class="info">
-    
-<div class="meta">
-  <span class="item" title="创建时间：2025-01-12 02:32:31">
-    <span class="icon">
-      <i class="ic i-calendar"></i>
-    </span>
-    <time itemprop="dateCreated datePublished" datetime="2025-01-12T02:32:31+08:00">2025-01-12</time>
-  </span>
-</div>
-
-    <h3><a href="/2025/01/12/MIT6.s081_fs/" itemprop="url" title="MIT6.s081_fs">MIT6.s081_fs</a></h3>
-    <div class="excerpt">
-        # Large files
-增加对大文件的支持。原本系统中的一个目录表只有 12 个 direct inode 和 1 个 indirect inode，可存储的最大容量为 12+256 个 blocks，增加双重 indirect inode 后可扩容至 11+256+256*256 个 blocks。
-
-原本一个 inode 目录支持 12 个直接 data 和一个 indirect 指针，为了给双重指针留出位置，需要减少一个直接 data。
-//kernel/fs.h#define NDIRECT 11 //-1#define NINDIRECT (BSIZE /...
-    </div>
-    <a href="/2025/01/12/MIT6.s081_fs/" itemprop="url" title="MIT6.s081_fs" class="btn">more...</a>
-  </div>
-</article>
-
-        
-<article class="item">
-  <div class="cover">
-    <a href="/2025/01/12/MIT6.s081_cow/" itemprop="url" title="MIT6.s081_cow"><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img5/v2-0142a43e2435804c9fd7746d14605e64_1440w.webp"></a>
-  </div>
-  <div class="info">
-    
-<div class="meta">
-  <span class="item" title="创建时间：2025-01-12 02:32:31">
-    <span class="icon">
-      <i class="ic i-calendar"></i>
-    </span>
-    <time itemprop="dateCreated datePublished" datetime="2025-01-12T02:32:31+08:00">2025-01-12</time>
-  </span>
-</div>
-
-    <h3><a href="/2025/01/12/MIT6.s081_cow/" itemprop="url" title="MIT6.s081_cow">MIT6.s081_cow</a></h3>
+    <h3><a href="/2023/10/19/MIT6.s081_cow/" itemprop="url" title="MIT6.s081_cow">MIT6.s081_cow</a></h3>
     <div class="excerpt">
         # Implement copy-on-write fork
 大意是子进程和父进程共享物理内存，只有需要对共享页写操作时再分配新的自己的物理页。
@@ -251,27 +142,136 @@ static struct proc*allocproc(void)&amp;#123; // ... // Allocate a trapframe page
 #define PTE_C (1L &amp;lt;&amp;lt; 8) // copy-on-write修改 kalloc.c 如下：
 int ref[PHYSTOP/PGSIZE+1];// 物理页面的引用计数//...voidfreerange(void *pa_start, void *pa_end)//...
     </div>
-    <a href="/2025/01/12/MIT6.s081_cow/" itemprop="url" title="MIT6.s081_cow" class="btn">more...</a>
+    <a href="/2023/10/19/MIT6.s081_cow/" itemprop="url" title="MIT6.s081_cow" class="btn">more...</a>
   </div>
 </article>
 
         
 <article class="item">
   <div class="cover">
-    <a href="/2025/01/12/CMU15445_p3/" itemprop="url" title="CMU15-445#project3"><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/bustub-whiteborder.svg"></a>
+    <a href="/2023/10/09/MIT6.s081_fs/" itemprop="url" title="MIT6.s081_fs"><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img5/v2-0142a43e2435804c9fd7746d14605e64_1440w.webp"></a>
   </div>
   <div class="info">
     
 <div class="meta">
-  <span class="item" title="创建时间：2025-01-12 02:32:31">
+  <span class="item" title="创建时间：2023-10-09 23:00:03">
     <span class="icon">
       <i class="ic i-calendar"></i>
     </span>
-    <time itemprop="dateCreated datePublished" datetime="2025-01-12T02:32:31+08:00">2025-01-12</time>
+    <time itemprop="dateCreated datePublished" datetime="2023-10-09T23:00:03+08:00">2023-10-09</time>
   </span>
 </div>
 
-    <h3><a href="/2025/01/12/CMU15445_p3/" itemprop="url" title="CMU15-445#project3">CMU15-445#project3</a></h3>
+    <h3><a href="/2023/10/09/MIT6.s081_fs/" itemprop="url" title="MIT6.s081_fs">MIT6.s081_fs</a></h3>
+    <div class="excerpt">
+        # Large files
+增加对大文件的支持。原本系统中的一个目录表只有 12 个 direct inode 和 1 个 indirect inode，可存储的最大容量为 12+256 个 blocks，增加双重 indirect inode 后可扩容至 11+256+256*256 个 blocks。
+
+原本一个 inode 目录支持 12 个直接 data 和一个 indirect 指针，为了给双重指针留出位置，需要减少一个直接 data。
+//kernel/fs.h#define NDIRECT 11 //-1#define NINDIRECT (BSIZE /...
+    </div>
+    <a href="/2023/10/09/MIT6.s081_fs/" itemprop="url" title="MIT6.s081_fs" class="btn">more...</a>
+  </div>
+</article>
+
+        
+<article class="item">
+  <div class="cover">
+    <a href="/2023/10/09/MIT6.s081_util/" itemprop="url" title="MIT6.s081_util"><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img5/v2-0142a43e2435804c9fd7746d14605e64_1440w.webp"></a>
+  </div>
+  <div class="info">
+    
+<div class="meta">
+  <span class="item" title="创建时间：2023-10-09 22:01:15">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <time itemprop="dateCreated datePublished" datetime="2023-10-09T22:01:15+08:00">2023-10-09</time>
+  </span>
+</div>
+
+    <h3><a href="/2023/10/09/MIT6.s081_util/" itemprop="url" title="MIT6.s081_util">MIT6.s081_util</a></h3>
+    <div class="excerpt">
+        # sleep
+Implement a user-level sleep program for xv6, along the lines of the UNIX sleep command. Your sleep should pause for a user-specified number of ticks. A tick is a notion of time defined by the xv6 kernel, namely the time between two interrupts from the timer chip. Your solution should be in...
+    </div>
+    <a href="/2023/10/09/MIT6.s081_util/" itemprop="url" title="MIT6.s081_util" class="btn">more...</a>
+  </div>
+</article>
+
+        
+<article class="item">
+  <div class="cover">
+    <a href="/2023/10/06/MIT6.s081_pgtbl/" itemprop="url" title="MIT6.s081_pgtbl"><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img5/v2-0142a43e2435804c9fd7746d14605e64_1440w.webp"></a>
+  </div>
+  <div class="info">
+    
+<div class="meta">
+  <span class="item" title="创建时间：2023-10-06 10:07:07">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <time itemprop="dateCreated datePublished" datetime="2023-10-06T10:07:07+08:00">2023-10-06</time>
+  </span>
+</div>
+
+    <h3><a href="/2023/10/06/MIT6.s081_pgtbl/" itemprop="url" title="MIT6.s081_pgtbl">MIT6.s081_pgtbl</a></h3>
+    <div class="excerpt">
+        # Speed up system calls
+将常用的系统数据保存在用户空间的页表中，这样就不用每次使用系统调用来获取了。lab 中已经定义好了 USYSCALL 的宏和结构体，内容就是一个 pid，可以直接拿来用。
+仿照 trapframe 的分配方法，将 usyscall 分配一下：
+static struct proc*allocproc(void)&amp;#123; // ... // Allocate a trapframe page. if((p-&gt;trapframe = (struct trapframe *)kalloc()) == 0)&amp;#123;...
+    </div>
+    <a href="/2023/10/06/MIT6.s081_pgtbl/" itemprop="url" title="MIT6.s081_pgtbl" class="btn">more...</a>
+  </div>
+</article>
+
+        
+<article class="item">
+  <div class="cover">
+    <a href="/2023/10/02/MIT6.s081_traps/" itemprop="url" title="MIT6.s081_traps"><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/img5/v2-0142a43e2435804c9fd7746d14605e64_1440w.webp"></a>
+  </div>
+  <div class="info">
+    
+<div class="meta">
+  <span class="item" title="创建时间：2023-10-02 23:37:37">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <time itemprop="dateCreated datePublished" datetime="2023-10-02T23:37:37+08:00">2023-10-02</time>
+  </span>
+</div>
+
+    <h3><a href="/2023/10/02/MIT6.s081_traps/" itemprop="url" title="MIT6.s081_traps">MIT6.s081_traps</a></h3>
+    <div class="excerpt">
+        # Backtrace
+大意是需要跟踪函数调用轨迹，根据栈的结构：
+
+可以得出，用户态函数调用栈从高地址向低地址增长。栈帧指针 fp 向下 8 个字节是返回地址，向下 16 个字节指向调用者的栈。只要顺着调用者的栈不断向下查找就能输出完整的调用轨迹。
+由于每个栈分配一个对齐的页，所以通过判断 fp 在不在当前页范围内就能知道有没有追踪到底。
+voidbacktrace(void)&amp;#123; printf(&quot;backtrace:&#92;n&quot;); uint64 fp=r_fp(); uint64 up = PGROUNDUP(fp); uint64 down =...
+    </div>
+    <a href="/2023/10/02/MIT6.s081_traps/" itemprop="url" title="MIT6.s081_traps" class="btn">more...</a>
+  </div>
+</article>
+
+        
+<article class="item">
+  <div class="cover">
+    <a href="/2023/09/02/CMU15445_p3/" itemprop="url" title="CMU15-445#project3"><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/bustub-whiteborder.svg"></a>
+  </div>
+  <div class="info">
+    
+<div class="meta">
+  <span class="item" title="创建时间：2023-09-02 12:01:00">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <time itemprop="dateCreated datePublished" datetime="2023-09-02T12:01:00+08:00">2023-09-02</time>
+  </span>
+</div>
+
+    <h3><a href="/2023/09/02/CMU15445_p3/" itemprop="url" title="CMU15-445#project3">CMU15-445#project3</a></h3>
     <div class="excerpt">
         # OverView
 Bustub 的整体架构如下，之前的 p1 和 p2 实现的都是局部功能，p3 要求把前面的模块串起来，真正实现 SQL 执行的全过程。
@@ -282,53 +282,53 @@ Bustub 的整体架构如下，之前的 p1 和 p2 实现的都是局部功能�
 SELECT t1.y, t2.x FROM t1 INNER JOIN t2 ON t1.x = t2.y;
 Optimizer...
     </div>
-    <a href="/2025/01/12/CMU15445_p3/" itemprop="url" title="CMU15-445#project3" class="btn">more...</a>
+    <a href="/2023/09/02/CMU15445_p3/" itemprop="url" title="CMU15-445#project3" class="btn">more...</a>
   </div>
 </article>
 
         
 <article class="item">
   <div class="cover">
-    <a href="/2025/01/12/CMU15445_p2/" itemprop="url" title="CMU15-445#project2"><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/bustub-whiteborder.svg"></a>
+    <a href="/2023/08/27/CMU15445_p2/" itemprop="url" title="CMU15-445#project2"><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/bustub-whiteborder.svg"></a>
   </div>
   <div class="info">
     
 <div class="meta">
-  <span class="item" title="创建时间：2025-01-12 02:32:31">
+  <span class="item" title="创建时间：2023-08-27 13:49:01">
     <span class="icon">
       <i class="ic i-calendar"></i>
     </span>
-    <time itemprop="dateCreated datePublished" datetime="2025-01-12T02:32:31+08:00">2025-01-12</time>
+    <time itemprop="dateCreated datePublished" datetime="2023-08-27T13:49:01+08:00">2023-08-27</time>
   </span>
 </div>
 
-    <h3><a href="/2025/01/12/CMU15445_p2/" itemprop="url" title="CMU15-445#project2">CMU15-445#project2</a></h3>
+    <h3><a href="/2023/08/27/CMU15445_p2/" itemprop="url" title="CMU15-445#project2">CMU15-445#project2</a></h3>
     <div class="excerpt">
         # Query
 ​		查询部分较为简单，总体思路是：先获取头表 header_page，然后获取树根 root_page，再用树根不断变换成内结点，最后找到叶结点的相应位置。在每个结点内部只要写一个二分查找就行。
 INDEX_TEMPLATE_ARGUMENTSauto BPLUSTREE_TYPE::Find(const InternalPage *page, const KeyType &amp;amp;key) -&gt; int &amp;#123; int l = 0; int r = page-&gt;GetSize() - 1; while (l &amp;lt; r)...
     </div>
-    <a href="/2025/01/12/CMU15445_p2/" itemprop="url" title="CMU15-445#project2" class="btn">more...</a>
+    <a href="/2023/08/27/CMU15445_p2/" itemprop="url" title="CMU15-445#project2" class="btn">more...</a>
   </div>
 </article>
 
         
 <article class="item">
   <div class="cover">
-    <a href="/2025/01/12/CMU15445_p1/" itemprop="url" title="CMU15-445#project1"><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/bustub-whiteborder.svg"></a>
+    <a href="/2023/08/19/CMU15445_p1/" itemprop="url" title="CMU15-445#project1"><img data-src="https://dodobird-blog.oss-cn-shanghai.aliyuncs.com/bustub-whiteborder.svg"></a>
   </div>
   <div class="info">
     
 <div class="meta">
-  <span class="item" title="创建时间：2025-01-12 02:32:31">
+  <span class="item" title="创建时间：2023-08-19 17:19:46">
     <span class="icon">
       <i class="ic i-calendar"></i>
     </span>
-    <time itemprop="dateCreated datePublished" datetime="2025-01-12T02:32:31+08:00">2025-01-12</time>
+    <time itemprop="dateCreated datePublished" datetime="2023-08-19T17:19:46+08:00">2023-08-19</time>
   </span>
 </div>
 
-    <h3><a href="/2025/01/12/CMU15445_p1/" itemprop="url" title="CMU15-445#project1">CMU15-445#project1</a></h3>
+    <h3><a href="/2023/08/19/CMU15445_p1/" itemprop="url" title="CMU15-445#project1">CMU15-445#project1</a></h3>
     <div class="excerpt">
         ​		做的版本是 2023 Spring
 # LRU-K
@@ -336,7 +336,7 @@ INDEX_TEMPLATE_ARGUMENTSauto BPLUSTREE_TYPE::Find(const InternalPage *page, cons
 
 ​		在具体使用 list...
     </div>
-    <a href="/2025/01/12/CMU15445_p1/" itemprop="url" title="CMU15-445#project1" class="btn">more...</a>
+    <a href="/2023/08/19/CMU15445_p1/" itemprop="url" title="CMU15-445#project1" class="btn">more...</a>
   </div>
 </article>
 
